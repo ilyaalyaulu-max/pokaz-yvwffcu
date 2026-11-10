@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow,noarchive">
 <title>КАВКАЗ.РФ</title>
+<script>
+/* Высота первого экрана на телефоне — в пикселях, один раз при открытии (10.11.2026, Илья с айфона: «начинаешь листать —
+   дёргается и увеличивается»). В браузере внутри Телеграма при прокрутке прячутся панели и окно страницы становится выше;
+   если считать высоту экрана от окна (vh, svh), первый экран растёт вместе с ним, фото и логотип увеличиваются рывками.
+   Пересчитываем только когда меняется ширина (телефон повернули). */
+(function(){var d=document.documentElement,w=innerWidth;function s(){d.style.setProperty('--vh0',innerHeight+'px')}s();
+addEventListener('resize',function(){if(innerWidth!==w){w=innerWidth;s()}});})();
+</script>
 <link rel="icon" href="img/favicon.png">
 <link rel="preload" href="fonts/onest-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/onest-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -430,24 +438,23 @@ ul{list-style:none}
   /* Первый экран на телефоне (10.11.2026, после снимка Ильи с айфона в Телеграме: «Архыз» наехал на «С чего начнём?»).
      Блоки стоят друг под другом в колонке и наехать не могут: логотип со ссылкой — в свободном месте по центру,
      ниже подпись курорта, ниже цифры. Высота — видимая часть экрана; если не помещается, экран становится выше. */
-  .hero{height:auto;min-height:100vh;min-height:100svh}
+  /* --vh0 — высота окна в px, которую скрипт в <head> ставит один раз при открытии: первый экран не растёт,
+     когда в телефоне при прокрутке прячутся панели браузера. От vh/svh/@media по высоте здесь ничего не считать. */
+  .hero{height:auto;min-height:var(--vh0,100svh)}
   .kpi b{white-space:nowrap}
   .sl{background-position:var(--mpos,var(--pos,center))}
-  .hero-holder{width:100vw;height:auto;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;padding:80px 20px var(--hero-bot,24px)}
+  .hero-holder{width:100vw;height:auto;min-height:var(--vh0,100svh);display:flex;flex-direction:column;padding:80px 20px var(--hero-bot,24px)}
   .cta-popup{display:none}
   .hero-content{position:relative;order:1;flex:1 1 auto;left:auto;right:auto;top:auto;bottom:auto;transform:none;display:flex;align-items:center;padding:28px 0}
   .hero h1{font-size:45px;white-space:normal;line-height:1.08}
   .hero h1 strong{font-size:55px;display:block}
   /* логотип уменьшается на низком экране, чтобы всё помещалось (--kpi-h ставит скрипт по высоте блока цифр) */
-  .hero-logo{width:min(58vw,300px);aspect-ratio:490/360}   /* место под логотип занято до его загрузки — экран не прыгает */
-  @supports (height:100svh){.hero-logo{width:min(58vw,300px,max(120px,calc((100svh - 246px - var(--hero-bot,24px) - var(--kpi-h,166px)) * 1.36)))}}
-  /* на низком экране (маленький телефон, браузер внутри Телеграма) отступы плотнее. Считаем от svh, а не через
-     @media по высоте: высота окна на айфоне меняется при прокрутке, и страница бы прыгала */
-  @supports (height:100svh){
-    .hero-content{padding:clamp(14px,calc((100svh - 456px - var(--hero-bot,24px)) * .22),28px) 0}
-    .hero .place{margin-bottom:clamp(12px,calc((100svh - 456px - var(--hero-bot,24px)) * .14),18px)}
-    .kpi li{padding:clamp(10px,calc((100svh - 456px - var(--hero-bot,24px)) * .12),15px) 0 clamp(9px,calc((100svh - 456px - var(--hero-bot,24px)) * .1),13px)}
-  }
+  .hero-logo{aspect-ratio:490/360}   /* место под логотип занято до его загрузки — экран не прыгает */
+  .hero-logo{width:min(58vw,300px,max(120px,calc((var(--vh0,100svh) - 246px - var(--hero-bot,24px) - var(--kpi-h,166px)) * 1.36)))}
+  /* на низком экране (маленький телефон, браузер внутри Телеграма) отступы плотнее — тоже от закреплённой высоты */
+  .hero-content{padding:clamp(14px,calc((var(--vh0,100svh) - 456px - var(--hero-bot,24px)) * .22),28px) 0}
+  .hero .place{margin-bottom:clamp(12px,calc((var(--vh0,100svh) - 456px - var(--hero-bot,24px)) * .14),18px)}
+  .kpi li{padding:clamp(10px,calc((var(--vh0,100svh) - 456px - var(--hero-bot,24px)) * .12),15px) 0 clamp(9px,calc((var(--vh0,100svh) - 456px - var(--hero-bot,24px)) * .1),13px)}
   .kpi{position:relative;order:3;left:auto;right:auto;top:auto;bottom:auto;transform:none}
   .kpi-cap{display:none}
   .kpi ul{display:grid;grid-template-columns:1fr 1fr;column-gap:18px}
@@ -515,11 +522,10 @@ ul{list-style:none}
   .ft-row3 .note{margin-left:0}
   .menu-grid{grid-template-columns:1fr}
 }
-@media (min-width:600px) and (max-width:1024px){.slide-img{aspect-ratio:16/7;max-height:42vh}}
+@media (min-width:600px) and (max-width:1024px){.slide-img{aspect-ratio:16/7;max-height:calc(var(--vh0,100vh) * .42)}}
 /* ---------- самые узкие телефоны (до 360 px): логотип и цифры мельче, знак ₽ не падает на новую строку ---------- */
 @media (max-width:360px){
-  .hero-logo{width:52vw}
-  @supports (height:100svh){.hero-logo{width:min(52vw,max(120px,calc((100svh - 246px - var(--hero-bot,24px) - var(--kpi-h,166px)) * 1.36)))}}
+  .hero-logo{width:min(52vw,max(120px,calc((var(--vh0,100svh) - 246px - var(--hero-bot,24px) - var(--kpi-h,166px)) * 1.36)))}
   .kpi b{font-size:26px}
   .kpi b small{font-size:13px;margin-left:5px}
   .kpi span{font-size:12px}
