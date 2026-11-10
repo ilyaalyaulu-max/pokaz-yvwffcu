@@ -555,6 +555,14 @@ ul{list-style:none}
   .hdr:not(.sticky) .hdr-nav{width:75vw;border-left-color:transparent}
   .hdr:not(.sticky) .burger{width:calc(6.14vw + 30px);padding:0 2.08vw 0 4.06vw}
 }
+/* ---------- телефон, 10.11.2026: кнопка меню едет вместе с прокруткой (Илья: «когда листаешь вниз, меню должно сопровождать, это должно быть удобно»).
+   Круг стоит ровно там, где кнопка меню в шапке, и проявляется, когда шапка уехала вверх. Полосы на всю ширину нет. ---------- */
+.fab-menu{display:none}
+@media (max-width:1024px){
+  .fab-menu{position:fixed;z-index:30;top:14px;right:calc(2vw + 14px);width:52px;height:52px;border-radius:50%;border:1px solid rgba(255,255,255,.22);background:var(--blue);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;box-shadow:0 6px 18px rgba(8,16,48,.28);opacity:0;visibility:hidden;transform:scale(.8);transition:opacity .25s,transform .25s cubic-bezier(.22,1,.36,1),visibility .25s;-webkit-tap-highlight-color:transparent}
+  .fab-menu.on{opacity:1;visibility:visible;transform:none}
+  .fab-menu i{display:block;width:22px;height:1.5px;border-radius:1px;background:currentColor}
+}
 @media (prefers-reduced-motion:reduce){.anim,.rv{transition:none}}
 </style>
 <style>
@@ -933,6 +941,7 @@ function onScroll(){
   // Телефон (10.11.2026, Илья с айфона: «всё дёргается, синяя полоска когда листаешь»): фото скриптом при прокрутке
   // не двигаем — айфон показывает это рывками; шапка не прилипает — она остаётся наверху страницы.
   const desk = isDesk();
+  fabUpdate(y);
   if (!desk) { if (heroImg.style.transform) heroImg.style.transform = ''; }
   else if (y < h) heroImg.style.transform = `translate3d(0,${(Math.min(y/h,1)*20).toFixed(3)}%,0)`;
   if (y > 0 && y > lastY && cta.classList.contains('opened') || (y > 20 && hero.classList.contains('slide-away'))) closeCta();
@@ -967,6 +976,15 @@ stickyCss.textContent = `.hdr.sticky .hdr-holder:before{opacity:1}.hdr.sticky .h
 .hdr{transition:transform .3s ease-in-out}.hdr.down{transform:translateY(-100%)}
 @media (max-width:1024px){.hdr.sticky .hdr-logo img{height:40px}}`;
 document.head.appendChild(stickyCss);
+
+/* ---- телефон: кнопка меню едет вместе с прокруткой ---- */
+const fab = document.createElement('button');
+fab.className = 'fab-menu'; fab.type = 'button'; fab.setAttribute('aria-label', 'Меню'); fab.innerHTML = '<i></i><i></i><i></i>';
+document.body.appendChild(fab);
+fab.onclick = () => menu.classList.add('open');
+// шапка высотой 80 px: после 60 px прокрутки её кнопка уже уехала вверх, и на её месте проявляется круг
+function fabUpdate(y){ const on = !isDesk() && y > 60; if (on !== fab.classList.contains('on')) fab.classList.toggle('on', on); }
+fabUpdate(scrollY); onResize(()=>fabUpdate(scrollY));
 
 /* ============ НОВОСТИ: карточки и «прилипание» как у Turner ============ */
 const NEWS = [
