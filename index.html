@@ -427,23 +427,33 @@ ul{list-style:none}
   .hdr-nav{width:50%;border-left:1px solid var(--line);justify-content:flex-end;transition:border-color .3s}
   .hdr:not(.sticky) .hdr-nav{border-left-color:transparent}   /* наверху слева пусто — линию посередине не показываем */
   .burger{width:80px;margin-right:2vw;border-left:0;border-right:0}
-  .hero{height:100vh;height:100svh;min-height:640px}   /* ровно в видимую часть экрана: цифры внизу не уходят под панель браузера */
+  /* Первый экран на телефоне (10.11.2026, после снимка Ильи с айфона в Телеграме: «Архыз» наехал на «С чего начнём?»).
+     Блоки стоят друг под другом в колонке и наехать не могут: логотип со ссылкой — в свободном месте по центру,
+     ниже подпись курорта, ниже цифры. Высота — видимая часть экрана; если не помещается, экран становится выше. */
+  .hero{height:auto;min-height:100vh;min-height:100svh}
   .kpi b{white-space:nowrap}
   .sl{background-position:var(--mpos,var(--pos,center))}
-  .hero-holder{width:100vw}
+  .hero-holder{width:100vw;height:auto;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;padding:80px 20px var(--hero-bot,24px)}
   .cta-popup{display:none}
-  .hero-content{left:20px;right:20px;top:auto;bottom:22vh;transform:none}
+  .hero-content{position:relative;order:1;flex:1 1 auto;left:auto;right:auto;top:auto;bottom:auto;transform:none;display:flex;align-items:center;padding:28px 0}
   .hero h1{font-size:45px;white-space:normal;line-height:1.08}
   .hero h1 strong{font-size:55px;display:block}
-  .hero-logo{width:58vw;max-width:300px}
-  .kpi{left:20px;right:20px;top:auto;bottom:24px;transform:none}
+  /* логотип уменьшается на низком экране, чтобы всё помещалось (--kpi-h ставит скрипт по высоте блока цифр) */
+  .hero-logo{width:min(58vw,300px);aspect-ratio:490/360}   /* место под логотип занято до его загрузки — экран не прыгает */
+  @supports (height:100svh){.hero-logo{width:min(58vw,300px,max(120px,calc((100svh - 246px - var(--hero-bot,24px) - var(--kpi-h,166px)) * 1.36)))}}
+  /* на низком экране (маленький телефон, браузер внутри Телеграма) отступы плотнее. Считаем от svh, а не через
+     @media по высоте: высота окна на айфоне меняется при прокрутке, и страница бы прыгала */
+  @supports (height:100svh){
+    .hero-content{padding:clamp(14px,calc((100svh - 456px - var(--hero-bot,24px)) * .22),28px) 0}
+    .hero .place{margin-bottom:clamp(12px,calc((100svh - 456px - var(--hero-bot,24px)) * .14),18px)}
+    .kpi li{padding:clamp(10px,calc((100svh - 456px - var(--hero-bot,24px)) * .12),15px) 0 clamp(9px,calc((100svh - 456px - var(--hero-bot,24px)) * .1),13px)}
+  }
+  .kpi{position:relative;order:3;left:auto;right:auto;top:auto;bottom:auto;transform:none}
   .kpi-cap{display:none}
   .kpi ul{display:grid;grid-template-columns:1fr 1fr;column-gap:18px}
   .kpi li:last-child{border-bottom:0}
   .kpi b{font-size:30px}
-  .hero-content{bottom:auto;top:22vh}
-  /* подпись курорта — над цифрами (--kpi-h ставит скрипт по высоте блока цифр) */
-  .hero .place{left:20px;right:20px;bottom:calc(24px + var(--kpi-h,170px) + 18px)}
+  .hero .place{position:relative;order:2;left:auto;right:auto;bottom:auto;margin-bottom:18px}
   .hero .place b{font-size:26px}
   .hero .place span{font-size:12px;margin-top:6px}
   .hero-img:after{background:linear-gradient(0deg,rgba(5,8,20,.78) 0%,rgba(5,8,20,.35) 34%,rgba(5,8,20,0) 52%),linear-gradient(175deg,rgba(5,5,5,.53) -15.8%,rgba(20,20,20,.1) 98.69%)}
@@ -466,8 +476,9 @@ ul{list-style:none}
   .body .w1419{padding:0 20px}
   .hw{margin:0;padding:0 20px}
   .t90{font-size:40px}.t70{font-size:30px}.t40{font-size:24px}.t30{font-size:20px}.t32{font-size:19px}
-  .news{padding:56px 0 40px}
+  .news{padding:56px 0 40px;clip-path:none}   /* обрезка нужна только для «прилипания» на компьютере, на телефоне она тормозит прокрутку */
   .news .w1419{padding-bottom:28px}
+  .office-img img{will-change:auto}
   .news-big{display:block;width:100%;padding:0;margin-bottom:44px}
   .news-small{position:static;width:auto;padding:0;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;margin-right:-20px}
   .news-track{display:flex;gap:20px;transform:none!important;padding-right:20px}
@@ -507,8 +518,8 @@ ul{list-style:none}
 @media (min-width:600px) and (max-width:1024px){.slide-img{aspect-ratio:16/7;max-height:42vh}}
 /* ---------- самые узкие телефоны (до 360 px): логотип и цифры мельче, знак ₽ не падает на новую строку ---------- */
 @media (max-width:360px){
-  .hero-content{top:max(96px,17vh)}
   .hero-logo{width:52vw}
+  @supports (height:100svh){.hero-logo{width:min(52vw,max(120px,calc((100svh - 246px - var(--hero-bot,24px) - var(--kpi-h,166px)) * 1.36)))}}
   .kpi b{font-size:26px}
   .kpi b small{font-size:13px;margin-left:5px}
   .kpi span{font-size:12px}
@@ -604,10 +615,9 @@ body.pm-open .pm-launch,body.pm-open .pm-hint,body.menu-open .pm-launch,body.men
   .pm-hint{right:16px;bottom:80px;max-width:calc(100vw - 32px)}
   .pm{right:0;bottom:0;width:100vw;height:100%;height:100dvh;border-radius:0}
 }
-/* телефон, первый экран: цифры и подпись курорта стоят выше кнопки помощника, кнопка их не закрывает (10.11.2026) */
+/* телефон, первый экран: под цифрами оставлено место для кнопки помощника, кнопка их не закрывает (10.11.2026) */
 @media (max-width:1024px){
-  .kpi{bottom:84px}
-  .hero .place{bottom:calc(84px + var(--kpi-h,170px) + 18px)}
+  .hero{--hero-bot:84px}
 }
 
 </style>
@@ -914,9 +924,13 @@ let lastY = scrollY, ticking = false;
 function onScroll(){
   const y = scrollY, h = hero.offsetHeight;
   newsScroll(y); parallax();
-  if (y < h) heroImg.style.transform = `translate3d(0,${(Math.min(y/h,1)*20).toFixed(3)}%,0)`;
+  // Телефон (10.11.2026, Илья с айфона: «всё дёргается, синяя полоска когда листаешь»): фото скриптом при прокрутке
+  // не двигаем — айфон показывает это рывками; шапка не прилипает — она остаётся наверху страницы.
+  const desk = isDesk();
+  if (!desk) { if (heroImg.style.transform) heroImg.style.transform = ''; }
+  else if (y < h) heroImg.style.transform = `translate3d(0,${(Math.min(y/h,1)*20).toFixed(3)}%,0)`;
   if (y > 0 && y > lastY && cta.classList.contains('opened') || (y > 20 && hero.classList.contains('slide-away'))) closeCta();
-  const stick = y > 77;
+  const stick = desk && y > 77;
   if (stick !== hdr.classList.contains('sticky')) {
     hdr.classList.toggle('sticky', stick);
     hdr.style.position = stick ? 'fixed' : 'absolute';
@@ -931,11 +945,14 @@ function onScroll(){
 }
 const DBG = location.search.includes('dbg') ? Object.assign(document.body.appendChild(document.createElement('div')), {style:'position:fixed;left:10px;bottom:10px;z-index:99;background:#000;color:#0f0;font:16px monospace;padding:6px'}) : null;
 addEventListener('scroll', ()=>{ if (!ticking){ ticking = true; requestAnimationFrame(onScroll); } }, {passive:true});
-addEventListener('resize', ()=>{ layoutNews(); parallax(); });
+// На телефоне при прокрутке прячется панель браузера, и приходит resize, хотя меняется только высота окна.
+// На такой resize ничего не пересчитываем, иначе страница дёргается. На компьютере — как раньше, на любой.
+function onResize(fn){ let w = innerWidth; addEventListener('resize', ()=>{ if (innerWidth !== w || isDesk()){ w = innerWidth; fn(); } }); }
+onResize(()=>{ layoutNews(); parallax(); });
 addEventListener('load', ()=>{ layoutNews(); parallax(); kpiHeight(); });
-// телефон: подпись курорта стоит над блоком цифр, какой бы высоты он ни был
+// телефон: по высоте блока цифр считается размер логотипа на первом экране
 function kpiHeight(){ hero.style.setProperty('--kpi-h', document.getElementById('kpi').offsetHeight + 'px'); }
-addEventListener('resize', kpiHeight); document.fonts.ready.then(kpiHeight); kpiHeight();
+onResize(kpiHeight); document.fonts.ready.then(kpiHeight); kpiHeight();
 document.fonts.ready.then(()=>{ layoutNews(); parallax(); });
 const stickyCss = document.createElement('style');
 stickyCss.textContent = `.hdr.sticky .hdr-holder:before{opacity:1}.hdr.sticky .hdr-holder{border-bottom-color:rgba(255,255,255,.15)}
@@ -979,7 +996,8 @@ function newsScroll(y){
 (function smooth(){ // как scrub .3 у Turner: список догоняет прокрутку мягко
   newsK += (newsTarget - newsK) * 0.18;
   if (Math.abs(newsTarget - newsK) < 0.0005) newsK = newsTarget;
-  newsTrack.style.transform = `translate3d(0,${(-newsShift * newsK).toFixed(2)}px,0)`;
+  const tr = isDesk() ? `translate3d(0,${(-newsShift * newsK).toFixed(2)}px,0)` : '';   // на телефоне список не двигаем и стиль каждый кадр не пишем
+  if (newsTrack.style.transform !== tr) newsTrack.style.transform = tr;
   requestAnimationFrame(smooth);
 })();
 
@@ -1004,6 +1022,7 @@ tabs.addEventListener('click', e=>{
 /* ============ ПАРАЛЛАКС ФОТО В БЛОКАХ ============ */
 const pars = [...document.querySelectorAll('.office-img img')];
 function parallax(){
+  if (!isDesk()) { pars.forEach(img=>{ if (img.style.transform) img.style.transform = ''; }); return; }   // телефон: фото стоят на месте
   const vh = innerHeight;
   pars.forEach(img=>{
     const r = img.parentElement.getBoundingClientRect();
@@ -1057,7 +1076,7 @@ function measure(){
   dim.style.width = dim.style.height = DS + 'px';
   dim.style.background = `radial-gradient(circle at 50% 50%, ${c}0) 0px, ${c}0) ${r0}px, ${c}.28) ${(r0 + r1) / 2}px, ${c}.52) ${r1}px, ${c}.56) ${DS}px)`;
 }
-measure(); addEventListener('resize', measure);
+measure(); onResize(measure);
 
 /* камера: фокус (fx, fy в долях карты), масштаб s, затемнение d */
 const easeIO = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
