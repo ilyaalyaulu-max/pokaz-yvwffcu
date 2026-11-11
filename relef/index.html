@@ -1,0 +1,999 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>КАВКАЗ.РФ</title>
+<link rel="icon" href="img/favicon.png">
+<script>
+// высота окна один раз при открытии: на телефоне панели браузера прячутся, а экран не должен прыгать
+document.documentElement.style.setProperty('--vh0', innerHeight + 'px');
+</script>
+<style>
+@font-face{font-family:Onest;font-style:normal;font-weight:100 900;font-display:block;src:url(fonts/onest-cyrillic.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:Onest;font-style:normal;font-weight:100 900;font-display:block;src:url(fonts/onest-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:Onest;font-style:normal;font-weight:100 900;font-display:block;src:url(fonts/onest-latin-ext.woff2) format('woff2');unicode-range:U+20BD}
+:root{
+  --blue:#213679; --deep:#0b1434; --sky:#9fd6ff; --ink:#17171b; --gray:#6c7080; --paper:#fff; --mist:#f3f5fa;
+  --pad:6.2vw; --sh:100vh; --ease:cubic-bezier(.2,.8,.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:Onest,Arial,sans-serif;background:var(--deep);color:#fff;-webkit-font-smoothing:antialiased;overflow-x:hidden;overflow-x:clip}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+ul{list-style:none}
+
+/* ===================== ШАПКА ===================== */
+.hdr{position:fixed;z-index:60;left:0;right:0;top:0;height:78px;padding:0 3.3vw;display:flex;align-items:center;justify-content:space-between;transition:background .4s,transform .5s var(--ease)}
+.hdr.solid{background:var(--blue)}
+.hdr.away{transform:translateY(-100%)}
+.hdr-l,.hdr-r{display:flex;align-items:center}
+.hdr-logo{width:0;opacity:0;overflow:hidden;transition:width .45s var(--ease),opacity .35s,margin .45s var(--ease)}
+.hdr-logo img{width:74px;max-width:none}
+.hdr.moved .hdr-logo{width:74px;opacity:1;margin-right:34px}
+.burger{width:44px;height:44px;display:grid;place-content:center;gap:6px;margin-left:-10px;margin-right:18px}
+.burger i{display:block;width:24px;height:1.6px;background:#fff}
+.nav{display:flex;gap:34px;font-size:15px}
+.nav a,.hdr-r a{opacity:.92;transition:opacity .2s}
+.nav a:hover,.hdr-r a:hover{opacity:1}
+.hdr-r{gap:30px;font-size:15px}
+.hdr-r .cta{border:1px solid rgba(255,255,255,.55);padding:11px 20px;transition:background .25s,color .25s}
+.hdr-r .cta:hover{background:#fff;color:var(--blue)}
+.fab{position:fixed;z-index:61;top:14px;right:14px;width:52px;height:52px;border-radius:50%;background:var(--blue);display:none;place-content:center;gap:5px;opacity:0;pointer-events:none;transition:opacity .3s;box-shadow:0 4px 18px rgba(0,0,0,.28)}
+.fab i{display:block;width:22px;height:1.6px;background:#fff}
+
+/* меню по кнопке */
+.menu{position:fixed;z-index:80;inset:0;background:var(--blue);padding:28px var(--pad) 40px;overflow:auto;opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s}
+.menu.open{opacity:1;visibility:visible}
+.menu-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6vh}
+.menu-top img{width:110px}
+.menu-close{font-size:15px;display:flex;align-items:center;gap:12px}
+.menu-close i{width:22px;height:22px;position:relative}
+.menu-close i:before,.menu-close i:after{content:"";position:absolute;left:0;right:0;top:10px;height:1.6px;background:#fff;transform:rotate(45deg)}
+.menu-close i:after{transform:rotate(-45deg)}
+.menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:46px 5vw}
+.menu-grid h4{font-weight:300;font-size:30px;margin-bottom:16px}
+.menu-grid a{display:block;font-size:15px;opacity:.8;padding:5px 0}
+.menu-grid a:hover{opacity:1}
+
+/* ===================== ПОЛЁТ НАД РЕЛЬЕФОМ ===================== */
+.fl{position:relative;background:var(--deep)}
+.stage{position:sticky;top:0;height:var(--sh);overflow:hidden;background:var(--deep)}
+#gl{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:0;transition:opacity 1.2s}
+.ready #gl{opacity:1}
+.nogl-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity .8s}
+.nogl .nogl-bg{opacity:.55}
+.veil{position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(90deg,rgba(8,14,40,.62) 0%,rgba(8,14,40,.34) 26%,rgba(8,14,40,0) 52%),linear-gradient(0deg,rgba(8,14,40,.55) 0%,rgba(8,14,40,0) 26%),linear-gradient(180deg,rgba(8,14,40,.38) 0%,rgba(8,14,40,0) 16%)}
+.veil2{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .8s;
+  background:linear-gradient(90deg,rgba(8,14,40,.86) 0%,rgba(8,14,40,.66) 24%,rgba(8,14,40,.22) 44%,rgba(8,14,40,0) 58%),radial-gradient(34% 52% at 100% 12%,rgba(8,14,40,.74) 0%,rgba(8,14,40,0) 78%)}
+.m-res .veil2,.m-outro .veil2{opacity:1}
+
+/* заставка, пока собирается рельеф */
+.boot{position:absolute;inset:0;z-index:5;background:var(--deep);transition:opacity .9s,visibility .9s}
+.ready .boot{opacity:0;visibility:hidden}
+.intro{z-index:6}
+.intro.pre h1{opacity:1;transform:none;animation:breath 1.6s ease-in-out infinite}
+@keyframes breath{50%{opacity:.5}}
+
+/* точки курортов поверх рельефа */
+.pins{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity 1s 1.6s}
+.ready .pins{opacity:1}
+.pin{position:absolute;left:0;top:0;will-change:transform}
+.pin .dot{position:absolute;left:-4px;top:-4px;width:8px;height:8px;border-radius:50%;background:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.22),0 0 18px 4px rgba(159,214,255,.75)}
+.pin .ring{position:absolute;left:-17px;top:-17px;width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.8);opacity:0}
+.pin.cur .ring{animation:ring 2.4s ease-out infinite}
+@keyframes ring{0%{transform:scale(.3);opacity:.9}100%{transform:scale(2.3);opacity:0}}
+.pin .stem{position:absolute;left:-.5px;bottom:4px;width:1px;height:var(--len,54px);background:rgba(255,255,255,.85)}
+.pin .stem{transition:opacity .45s}
+.pin .lbl{position:absolute;left:0;bottom:calc(var(--len,54px) + 4px);transform:translateX(-50%);white-space:nowrap;font-size:12.5px;font-weight:500;letter-spacing:.02em;line-height:1;padding:6px 9px 6px;background:rgba(27,45,110,.92);transition:opacity .45s}
+.pin.hide .lbl,.pin.hide .stem{opacity:0}
+/* круглое фото курорта: вырастает из точки — у выбранного курорта большое, у остальных при наведении */
+@property --r{syntax:'<length>';inherits:true;initial-value:75px}
+.pin{--r:75px;--ax:.7071;--ay:.7071;transition:opacity .4s,--r .6s cubic-bezier(.2,.8,.2,1)}   /* --ax, --ay — в какую сторону от точки растёт круг (ставит скрипт, чтобы круг не уходил за край) */
+.pin.cur{--r:clamp(105px,10.4vw,168px)}
+.pin.cur.sm{--r:clamp(96px,8vw,118px)}
+.pin .hit{position:absolute;left:-20px;top:-20px;width:40px;height:40px;border-radius:50%;pointer-events:auto;cursor:pointer}
+.pin .lbl{pointer-events:auto;cursor:pointer}
+.pin .pph{position:absolute;left:calc((var(--r) + 12px)*var(--ax) - var(--r));top:calc((var(--r) + 12px)*var(--ay) - var(--r));width:calc(var(--r)*2);height:calc(var(--r)*2);border-radius:50%;overflow:hidden;
+  transform-origin:calc(var(--r) - (var(--r) + 12px)*var(--ax)) calc(var(--r) - (var(--r) + 12px)*var(--ay));transform:scale(0);opacity:0;pointer-events:none;transition:transform .4s cubic-bezier(.6,0,.8,.3),opacity .25s .15s;
+  box-shadow:0 0 0 1.5px #fff,0 0 0 10px rgba(255,255,255,.13),0 26px 70px rgba(3,8,30,.62)}
+.pin .pph img{width:100%;height:100%;object-fit:cover;transform:scale(1.35);transition:transform 1.5s var(--ease)}
+.pin:hover .pph,.pin.hov .pph,.pin.cur .pph{transform:scale(1);opacity:1;transition:transform .75s cubic-bezier(.2,1.3,.3,1),opacity .2s}
+.pin:hover .pph img,.pin.hov .pph img,.pin.cur .pph img{transform:scale(1.08) translate(calc(var(--mx,0)*-9px),calc(var(--my,0)*-7px))}
+.pin:hover,.pin.hov{z-index:5}
+.pin:hover .lbl,.pin:hover .stem,.pin.hov .lbl,.pin.hov .stem{opacity:1}
+.pin.up:hover .lbl,.pin.up.hov .lbl,.pin.up.cur .lbl,.pin.up:hover .stem,.pin.up.hov .stem,.pin.up.cur .stem{opacity:0}
+/* то же фото — при наведении на название в списке справа */
+.rail-ph{position:absolute;right:calc(3.3vw + 178px);top:0;width:150px;height:150px;border-radius:50%;overflow:hidden;transform:translateY(-50%) scale(0);transform-origin:100% 50%;opacity:0;pointer-events:none;
+  transition:transform .35s cubic-bezier(.6,0,.8,.3),opacity .25s,top .35s var(--ease);box-shadow:0 0 0 1.5px #fff,0 0 0 9px rgba(255,255,255,.13),0 20px 50px rgba(3,8,30,.6)}
+.rail-ph.on{transform:translateY(-50%) scale(1);opacity:1;transition:transform .6s cubic-bezier(.2,1.3,.3,1),opacity .2s,top .35s var(--ease)}
+.rail-ph img{width:100%;height:100%;object-fit:cover}
+.pin.cur .dot{transform:scale(1.35)}
+.pin.far{opacity:.0}
+.sea{position:absolute;left:0;top:0;font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:rgba(190,220,255,.62);white-space:nowrap;transition:opacity .6s}
+.sea span{display:block;transform:translate(-50%,-50%)}
+.peak{position:absolute;left:0;top:0;font-size:12.5px;white-space:nowrap;opacity:0;transition:opacity .5s}
+.peak.on{opacity:1}
+.peak span{position:absolute;left:14px;bottom:26px;text-shadow:0 1px 10px rgba(5,10,30,.9)}
+.peak b{font-weight:500}
+.peak:before{content:"";position:absolute;left:0;bottom:2px;width:1px;height:30px;background:rgba(255,255,255,.75);transform-origin:bottom;transform:rotate(22deg)}
+
+/* первый экран */
+.intro{position:absolute;inset:0;pointer-events:none}
+.intro-main{position:absolute;left:var(--pad);top:47%;transform:translateY(-50%);width:min(34vw,470px)}
+.intro-logo{width:clamp(210px,23.5vw,400px)}
+.intro-line{margin-top:34px;font-size:clamp(16px,1.3vw,21px);line-height:1.45;color:rgba(255,255,255,.88);max-width:25em}
+.kpi{position:absolute;left:var(--pad);right:var(--pad);bottom:5.2vh}
+.kpi-cap{font-weight:500;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.8);margin-bottom:16px}
+.kpi ul{display:grid;grid-template-columns:repeat(4,1fr);column-gap:3vw}
+.kpi li{border-top:1px solid rgba(255,255,255,.35);padding-top:15px}
+.kpi b{display:block;font-weight:300;font-size:clamp(30px,3.05vw,58px);line-height:1;letter-spacing:-.015em;font-variant-numeric:tabular-nums;white-space:nowrap}
+.kpi b small{font-size:17px;font-weight:400;margin-left:7px;letter-spacing:0}
+.kpi span{display:block;font-size:13px;color:rgba(255,255,255,.85);margin-top:7px}
+.hint{position:absolute;right:3.3vw;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;gap:14px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.8)}
+.hint p{writing-mode:vertical-rl}
+.hint i{display:block;width:1px;height:64px;background:rgba(255,255,255,.3);position:relative;overflow:hidden}
+.hint i:after{content:"";position:absolute;left:0;top:0;width:1px;height:26px;background:#fff;animation:drop 1.9s cubic-bezier(.6,0,.3,1) infinite}
+@keyframes drop{0%{transform:translateY(-26px)}100%{transform:translateY(64px)}}
+.an{opacity:0;transform:translateY(22px);transition:opacity 1s var(--ease),transform 1.2s var(--ease)}
+.go .an{opacity:1;transform:none}
+.go .an.d1{transition-delay:.15s}.go .an.d2{transition-delay:.3s}.go .an.d3{transition-delay:.45s}.go .an.d4{transition-delay:.6s}.go .an.d5{transition-delay:.75s}.go .an.d6{transition-delay:.9s}
+
+/* курорт: название и текст слева, фото справа внизу */
+.res{position:absolute;inset:0;pointer-events:none}
+.r{position:absolute;inset:0;visibility:hidden;transition:visibility 0s .5s}
+.r.on{visibility:visible;transition-delay:0s}
+.r-tx{position:absolute;left:var(--pad);top:50%;transform:translateY(-50%);width:min(38vw,600px)}
+.r-reg{font-size:13px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--sky)}
+.r-name{font-weight:300;font-size:clamp(46px,5.9vw,112px);line-height:.98;letter-spacing:-.015em;text-transform:uppercase;margin:16px 0 26px -.04em;overflow:hidden;padding-bottom:.06em}
+.r-name.long{font-size:clamp(30px,3.5vw,66px);line-height:1.04}
+.r-name span{display:block;transform:translateY(108%);transition:transform .5s cubic-bezier(.6,0,.8,.3)}
+.r.on .r-name span{transform:none;transition:transform 1.05s var(--ease) .12s}
+.r-h{font-weight:500;font-size:clamp(18px,1.55vw,25px);line-height:1.28;max-width:19em}
+.r-p{font-size:clamp(15px,1.1vw,17px);line-height:1.55;color:rgba(255,255,255,.84);margin-top:12px;max-width:27em}
+.lnk{display:inline-flex;align-items:center;gap:14px;font-size:15px;font-weight:500;margin-top:28px;pointer-events:auto}
+.lnk svg{width:35px;height:14px;stroke:currentColor;transition:transform .3s var(--ease)}
+.lnk:hover svg{transform:translateX(7px)}
+.r-reg,.r-h,.r-p,.r .lnk,.r-th{opacity:0;transform:translateY(16px);transition:opacity .3s,transform .3s}
+.r.on .r-reg,.r.on .r-h,.r.on .r-p,.r.on .lnk,.r.on .r-th{opacity:1;transform:none;transition:opacity .8s var(--ease),transform 1s var(--ease)}
+.r.on .r-reg{transition-delay:.05s}.r.on .r-h,.r.on .r-th{transition-delay:.38s}.r.on .r-p{transition-delay:.48s}.r.on .lnk{transition-delay:.58s}
+.r-th{display:none}
+/* список курортов справа сверху: выбранный крупнее и ярче */
+.rail{position:absolute;right:3.3vw;top:118px;display:flex;flex-direction:column;align-items:flex-end;gap:9px;opacity:0;visibility:hidden;transition:opacity .5s,visibility .5s}
+.rail.on{opacity:1;visibility:visible}
+.rail button{font-size:13px;line-height:1.2;color:rgba(255,255,255,.66);text-shadow:0 1px 8px rgba(5,10,30,.8);transition:color .3s,font-size .3s var(--ease);text-align:right}
+.rail button:hover{color:#fff}
+.rail button.on{color:#fff;font-size:17px;font-weight:500}
+
+/* финал полёта: инвестору */
+.inv{position:absolute;left:var(--pad);top:50%;transform:translateY(-50%);width:min(40vw,620px);visibility:hidden;transition:visibility 0s .5s}
+.inv.on{visibility:visible;transition-delay:0s}
+.inv .lab{font-size:13px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--sky)}
+.inv h2{font-weight:300;font-size:clamp(32px,3.7vw,66px);line-height:1.05;letter-spacing:-.012em;margin:16px 0 24px}
+.inv p{font-size:clamp(15px,1.15vw,18px);line-height:1.55;color:rgba(255,255,255,.86);max-width:29em}
+.inv-f{display:grid;grid-template-columns:repeat(3,auto);justify-content:start;column-gap:3vw;margin-top:30px}
+.inv-f b{display:block;font-weight:300;font-size:clamp(26px,2.3vw,40px);line-height:1;white-space:nowrap}
+.inv-f span{display:block;font-size:13px;color:rgba(255,255,255,.82);margin-top:8px;max-width:11em;line-height:1.35}
+.btn{display:inline-flex;align-items:center;gap:16px;margin-top:36px;background:#fff;color:var(--blue);font-size:15px;font-weight:500;padding:17px 26px;pointer-events:auto;transition:background .25s,color .25s}
+.btn svg{width:35px;height:14px;stroke:currentColor;transition:transform .3s var(--ease)}
+.btn:hover{background:var(--sky)}
+.btn:hover svg{transform:translateX(7px)}
+.inv>*{opacity:0;transform:translateY(18px);transition:opacity .3s,transform .3s}
+.inv.on>*{opacity:1;transform:none;transition:opacity .9s var(--ease),transform 1.1s var(--ease)}
+.inv.on h2{transition-delay:.1s}.inv.on p{transition-delay:.2s}.inv.on .inv-f{transition-delay:.3s}.inv.on .btn{transition-delay:.4s}
+
+/* ===================== БЕЛЫЕ БЛОКИ ===================== */
+.white{background:var(--paper);color:var(--ink)}
+.wrap{padding:0 var(--pad)}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:54px}
+.t70{font-weight:300;font-size:clamp(38px,4.9vw,84px);line-height:1;letter-spacing:-.015em}
+.lnk.dark{color:var(--blue);margin-top:0}
+.news{padding:130px 0 120px}
+.news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:64px 2.6vw}
+.n{display:block}
+.n-img{overflow:hidden;aspect-ratio:3/2;background:var(--mist)}
+.n-img img{width:100%;height:100%;object-fit:cover;transition:transform 1.1s var(--ease)}
+.n:hover .n-img img{transform:scale(1.05)}
+.n time{display:block;font-size:13px;color:var(--gray);margin:18px 0 9px}
+.n h3{font-weight:500;font-size:clamp(17px,1.32vw,21px);line-height:1.3;transition:color .25s}
+.n:hover h3{color:var(--blue)}
+.n.big{grid-column:1/-1;display:grid;grid-template-columns:1.45fr 1fr;column-gap:4vw;align-items:end}
+.n.big .n-img{aspect-ratio:16/9}
+.n.big h3{font-weight:300;font-size:clamp(26px,2.75vw,46px);line-height:1.1;letter-spacing:-.01em}
+.n.big p{font-size:clamp(15px,1.15vw,18px);line-height:1.55;color:#4a4d5a;margin-top:18px}
+.n.big time{margin-top:0}
+
+.act{padding:20px 0 130px}
+.act-intro{display:grid;grid-template-columns:1fr 1.25fr;column-gap:4vw;align-items:end;margin-bottom:54px}
+.act-intro p{font-size:clamp(17px,1.5vw,24px);line-height:1.42;color:#33363f}
+.act-cols{display:grid;grid-template-columns:minmax(260px,.62fr) 1.6fr;column-gap:2.6vw}
+.blue-box{background:var(--blue);color:#fff;padding:38px 34px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;height:100%}
+.blue-box button{text-align:left;font-size:clamp(17px,1.35vw,21px);line-height:1.25;color:rgba(255,255,255,.62);padding:8px 0;transition:color .3s,font-size .35s var(--ease)}
+.blue-box button:hover{color:#fff}
+.blue-box button.on{color:#fff;font-size:clamp(24px,2.1vw,34px);font-weight:300}
+.act-view{position:relative;display:grid}
+.slide{grid-area:1/1;display:grid;grid-template-columns:1fr 1.15fr;column-gap:2.6vw;align-items:stretch;opacity:0;visibility:hidden;transition:opacity .5s,visibility .5s}
+.slide.on{opacity:1;visibility:visible}
+.slide-tx{display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:6px}
+.slide-tx .lab{font-size:13px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:#3157a7}
+.slide-tx h3{font-weight:300;font-size:clamp(26px,2.5vw,42px);line-height:1.1;margin:14px 0 14px;letter-spacing:-.01em}
+.slide-tx p{font-size:clamp(15px,1.1vw,17px);line-height:1.55;color:#4a4d5a}
+.slide-tx .lnk{margin-top:24px}
+.slide-img{overflow:hidden;aspect-ratio:4/3;background:var(--mist)}
+.slide-img img{width:100%;height:100%;object-fit:cover}
+
+.rv{opacity:0;transform:translateY(34px);transition:opacity 1s var(--ease),transform 1.2s var(--ease)}
+.rv.in{opacity:1;transform:none}
+
+/* ===================== ПОДВАЛ ===================== */
+.ft{background:var(--blue);padding:70px var(--pad) 40px;font-size:14px;line-height:1.7}
+.ft-row{display:grid;grid-template-columns:1fr 2fr 1.2fr;column-gap:4vw;padding-bottom:44px}
+.ft-logo{width:150px}
+.ft-nav{display:flex;flex-wrap:wrap;gap:10px 30px;font-size:16px}
+.ft-soc{display:flex;gap:22px;align-items:center;justify-content:flex-end;font-size:15px}
+.ft .muted{color:rgba(255,255,255,.66)}
+.ft a:hover{opacity:.8}
+.ft-row2{border-top:1px solid rgba(255,255,255,.2);padding-top:34px}
+.ft-row3{border-top:1px solid rgba(255,255,255,.2);padding-top:26px;display:flex;flex-wrap:wrap;gap:8px 30px;color:rgba(255,255,255,.66);font-size:13px}
+.ft .legal{text-align:right}
+
+/* ===================== ТЕЛЕФОН И УЗКОЕ ОКНО ===================== */
+@media (max-width:1024px){
+  :root{--pad:20px;--sh:var(--vh0,100vh)}
+  .hdr{position:absolute;height:66px;padding:0 20px;background:none!important;transform:none!important}
+  .hdr-logo,.nav,.hdr-r .cta,.hdr-r a:not(.lang){display:none}
+  .hdr-l{order:2}.hdr-r{order:1}
+  .burger{margin:0 -10px 0 0}
+  .fab{display:grid}
+  .fab.on{opacity:1;pointer-events:auto}
+  .menu-grid{grid-template-columns:1fr 1fr;gap:34px 20px}
+  .menu-grid h4{font-size:22px}
+  .veil{background:linear-gradient(0deg,rgba(8,14,40,.94) 0%,rgba(8,14,40,.8) 30%,rgba(8,14,40,0) 60%),linear-gradient(180deg,rgba(8,14,40,.4) 0%,rgba(8,14,40,0) 14%)}
+  .intro-main{top:auto;bottom:calc(var(--kpi-h,170px) + 48px);transform:none;width:auto;right:20px}
+  .intro-logo{width:min(54vw,230px)}
+  .intro-line{margin-top:20px;font-size:15px;max-width:19em}
+  .kpi{bottom:24px}
+  .kpi-cap{display:none}
+  .kpi ul{grid-template-columns:1fr 1fr;column-gap:18px;row-gap:14px}
+  .kpi li{padding-top:11px}
+  .kpi b{font-size:28px}
+  .kpi b small{font-size:13px;margin-left:5px}
+  .kpi span{font-size:12px;margin-top:5px}
+  .hint{display:none}
+  .r-tx{top:auto;bottom:26px;transform:none;left:20px;right:20px;width:auto}
+  .r-reg{font-size:11.5px}
+  .r-name{font-size:clamp(38px,12.5vw,64px);margin:10px 0 16px}
+  .r-name.long{font-size:clamp(25px,7.6vw,40px)}
+  .r-row{display:flex;gap:14px;align-items:flex-start}
+  .r-th{display:block;flex:none;width:84px;height:84px;object-fit:cover;border-radius:50%}
+  .r-h{font-size:16px}
+  .r-p{font-size:13.5px;line-height:1.45;margin-top:7px}
+  .r .lnk{margin-top:16px;font-size:14px}
+  .pin .pph,.rail-ph{display:none}
+  .m-intro .pin .lbl,.m-intro .pin .stem,.m-outro .pin .lbl,.m-outro .pin .stem{display:none}   /* на общих видах на телефоне — только точки, подписи слипаются */
+  .rail{display:none}
+  .inv{top:auto;bottom:26px;transform:none;left:20px;right:20px;width:auto}
+  .inv h2{font-size:clamp(27px,8vw,40px);margin:10px 0 14px}
+  .inv p{font-size:14px;line-height:1.45}
+  .inv-f{column-gap:16px;margin-top:18px;grid-template-columns:repeat(3,1fr)}
+  .inv-f b{font-size:21px}
+  .inv-f span{font-size:11.5px;margin-top:5px}
+  .btn{margin-top:20px;padding:14px 20px;font-size:14px}
+  .pin .lbl{font-size:11.5px}
+  .sea{display:none}
+  .sec-head{margin-bottom:30px}
+  .news{padding:70px 0 60px}
+  .news-grid{grid-template-columns:1fr;gap:26px}
+  .n.big{display:block;margin-bottom:8px}
+  .n.big time{margin-top:16px}
+  .n.big p{display:none}
+  .n:not(.big){display:grid;grid-template-columns:104px 1fr;column-gap:14px;align-items:start}
+  .n:not(.big) .n-img{aspect-ratio:1;grid-row:1/3}
+  .n:not(.big) time{margin:0 0 6px}
+  .n:not(.big) h3{font-size:15px;line-height:1.3}
+  .act{padding:10px 0 70px}
+  .act-intro{display:block;margin-bottom:28px}
+  .act-intro p{margin-top:16px;font-size:16px}
+  .act-cols{display:block}
+  .blue-box{padding:24px 20px;gap:4px;height:auto}
+  .blue-box button{font-size:16px;padding:6px 0}
+  .blue-box button.on{font-size:22px}
+  .act-view{margin-top:22px}
+  .slide{display:flex;flex-direction:column-reverse;gap:18px}
+  .ft{padding:46px 20px 30px}
+  .ft-row{display:block;padding-bottom:26px}
+  .ft-row>div{margin-bottom:22px}
+  .ft-soc{justify-content:flex-start}
+  .ft .legal{text-align:left}
+}
+@media (max-width:340px){ .kpi b{font-size:24px} .r-th{width:68px;height:68px} }
+@media (prefers-reduced-motion:reduce){ .hint i:after,.pin.cur .ring,.intro.pre h1{animation:none} }
+</style>
+</head>
+<body>
+
+<header class="hdr" id="hdr">
+  <div class="hdr-l">
+    <a class="hdr-logo" href="#" aria-label="КАВКАЗ.РФ"><img src="img/logo.png" alt="КАВКАЗ.РФ"></a>
+    <button class="burger" id="burger" aria-label="Меню"><i></i><i></i><i></i></button>
+    <nav class="nav"><a href="#">Компания</a><a href="#">Деятельность</a><a href="#">Инвестиции</a><a href="#">Закупки и продажи</a><a href="#">Пресс-центр</a></nav>
+  </div>
+  <div class="hdr-r"><a class="cta" href="#">Стать резидентом</a><a href="#">Контакты</a><a class="lang" href="#">EN</a></div>
+</header>
+<button class="fab" id="fab" aria-label="Меню"><i></i><i></i><i></i></button>
+
+<!-- ===================== ПОЛЁТ ===================== -->
+<section class="fl" id="fl">
+  <div class="stage" id="stage">
+    <div class="nogl-bg" id="noglBg"></div>
+    <canvas id="gl"></canvas>
+    <div class="veil"></div><div class="veil2"></div>
+    <div class="pins" id="pins"></div>
+
+    <div class="intro pre" id="intro">
+      <div class="intro-main">
+        <h1 class="an"><img class="intro-logo" src="img/logo.png" alt="КАВКАЗ.РФ"></h1>
+        <p class="intro-line an d2">Шесть особых экономических зон, семь всесезонных курортов и прибрежный кластер на Каспии</p>
+      </div>
+      <div class="kpi" id="kpi">
+        <div class="kpi-cap an d3">Ключевые показатели к 2025 г. накопленным итогом</div>
+        <ul>
+          <li class="an d3"><b data-n="1,4">1,4<small>млн</small></b><span>туристов в 2025 году</span></li>
+          <li class="an d4"><b data-n="68,6">68,6<small>км</small></b><span>трасс</span></li>
+          <li class="an d5"><b data-n="52,2">52,2<small>млрд ₽</small></b><span>бюджетных инвестиций</span></li>
+          <li class="an d6"><b data-n="40,5">40,5<small>млрд ₽</small></b><span>частных инвестиций</span></li>
+        </ul>
+      </div>
+      <div class="hint an d6" aria-hidden="true"><p>Листайте</p><i></i></div>
+    </div>
+
+    <div class="res" id="res"></div>
+    <nav class="rail" id="rail" aria-label="Курорты"></nav>
+
+    <div class="inv" id="inv">
+      <div class="lab">Инвестору</div>
+      <h2>Станьте резидентом особой экономической зоны</h2>
+      <p>Минимального порога вложений нет. Готовая инфраструктура, льготная аренда земли и бесплатное подключение к сетям.</p>
+      <div class="inv-f">
+        <div><b>49 лет</b><span>срок особой экономической зоны</span></div>
+        <div><b>30–40 %</b><span>ниже издержки инвесторов</span></div>
+        <div><b>3–4 месяца</b><span>путь до статуса резидента</span></div>
+      </div>
+      <a href="#" class="btn">Как стать резидентом <svg viewBox="0 0 35 14"><path d="M0 7h33M27 1l6 6-6 6" fill="none" stroke-width="1.6"/></svg></a>
+    </div>
+
+    <div class="boot"></div>
+  </div>
+</section>
+
+<!-- ===================== НОВОСТИ ===================== -->
+<section class="white news" id="news">
+  <div class="wrap">
+    <div class="sec-head rv"><h2 class="t70">Новости</h2><a href="#" class="lnk dark">Все новости <svg viewBox="0 0 35 14"><path d="M0 7h33M27 1l6 6-6 6" fill="none" stroke-width="1.6"/></svg></a></div>
+    <div class="news-grid" id="newsGrid"></div>
+  </div>
+</section>
+
+<!-- ===================== ДЕЯТЕЛЬНОСТЬ ===================== -->
+<section class="white act" id="act">
+  <div class="wrap">
+    <div class="act-intro rv">
+      <h2 class="t70">Деятельность</h2>
+      <p>Создаём условия для развития Северного Кавказа: управляем особыми экономическими зонами и выстраиваем взаимовыгодное сотрудничество государства и бизнеса.</p>
+    </div>
+    <div class="act-cols rv">
+      <div><div class="blue-box" id="tabs"></div></div>
+      <div class="act-view" id="actView"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ПОДВАЛ ===================== -->
+<footer class="ft">
+  <div class="ft-row">
+    <div><img class="ft-logo" src="img/logo.png" alt="КАВКАЗ.РФ"></div>
+    <div><nav class="ft-nav"><a href="#">Компания</a><a href="#">Деятельность</a><a href="#">Инвестиции</a><a href="#">Закупки и продажи</a><a href="#">Пресс-центр</a><a href="#">Контакты</a></nav></div>
+    <div class="ft-soc"><a href="https://vk.com/kavkaz_rf">VK</a><a href="https://t.me/kavkaz_rf">Telegram</a><a href="https://max.ru/kavkaz_rf">MAX</a><a href="#">English</a></div>
+  </div>
+  <div class="ft-row ft-row2">
+    <div>© 2026<br>АО «КАВКАЗ.РФ»</div>
+    <div>
+      <a href="mailto:info@ncrc.ru">info@ncrc.ru</a> · <a href="tel:+74957759122">+7 (495) 775-91-22</a> · <span class="muted">факс +7 (495) 775-91-24</span><br>
+      <span class="muted">123112, Москва, ул. Тестовская, д. 10, бизнес-центр «Северная Башня»</span><br>
+      <a href="#">Отправить обращение →</a>
+    </div>
+    <div class="legal"><a href="#">Противодействие коррупции</a><br><a href="#">Политика обработки персональных данных</a><br><a href="#">Нормативы ГТО</a></div>
+  </div>
+  <div class="ft-row3"><span>Минэкономразвития России</span><span>Северо-Кавказский федеральный округ</span><span>Инвесткарта РФ</span><span>Кавказский инвестиционный форум</span><span>Мой экспорт</span><span>Объясняем.рф</span></div>
+</footer>
+
+<div class="menu" id="menu">
+  <div class="menu-top"><img src="img/logo.png" alt="КАВКАЗ.РФ"><button class="menu-close" id="menuClose">Закрыть <i></i></button></div>
+  <div class="menu-grid" id="menuGrid"></div>
+</div>
+
+<script>
+/* ===================== ДАННЫЕ (тексты, цифры и фото — с сайта КАВКАЗ.РФ, как в принятой главной) ===================== */
+// x, z — место на карте высот (точки), h — высота рельефа в этой точке, м. Координаты — OpenStreetMap.
+// Фото Цори, Матласа и Каспия — их же снимки с сайта (около 475 точек), увеличенные в Higgsfield 10.11.2026 (оригиналы и 4K — kavkaz-rf/foto/ и foto/uvelicheno/).
+const RES = [
+  {n:'Архыз', r:'Карачаево-Черкесская Республика', img:'img/r-arkhyz.jpg', h1:'Семейный курорт, с которого начался кластер', p:'Открыт в декабре 2013 года. Две деревни — Романтик и Лунная поляна, около 25 км трасс.', x:913.2, z:783.5, h:1713},
+  {n:'Эльбрус', r:'Кабардино-Балкарская Республика', img:'img/map-elbrus.jpg', h1:'Курорт у высочайшей горы Европы', p:'Канатная дорога поднимается до 3847 метров. Кататься можно до июля.', x:1386.5, z:925.5, h:2338},
+  {n:'Мамисон', r:'Республика Северная Осетия — Алания', img:'img/r-mamison.jpg', h1:'Молодой всесезонный арт-курорт', p:'Частные инвесторы вложили 6,89 млрд ₽. В 2026 году — премия Ski Business Award за лучшее продвижение.', x:1880.9, z:1226.3, h:2044},
+  {n:'Армхи', r:'Республика Ингушетия', img:'img/r-armhi.jpg', h1:'Курорт в горах Ингушетии', p:'Горные долины, реки и старинные башни. Входит в туристический кластер Кавказ.РФ.', x:2196.8, z:1151.6, h:1262},
+  {n:'Цори', r:'Республика Ингушетия', img:'img/r-cori-b.jpg', h1:'Курорт среди древних башен', p:'Зелёные долины горной Ингушетии. Входит в туристический кластер Кавказ.РФ.', x:2338.8, z:1153.7, h:1776},
+  {n:'Ведучи', r:'Чеченская Республика', img:'img/map-veduchi.jpg', h1:'Всесезонный курорт в горах Чечни', p:'Полтора-два часа от аэропорта «Грозный». Летом — байк-парк, квадроциклы и параплан.', x:2514.4, z:1216.7, h:1279},
+  {n:'Матлас', r:'Республика Дагестан', img:'img/r-matlas-b.jpg', h1:'Курорт на высокогорье Дагестана', p:'Снежные хребты и простор плато. Входит в туристический кластер Кавказ.РФ.', x:2888.9, z:1259.1, h:1842},
+  // точка Каспийского кластера стоит на берегу Дербентского района примерно: точный участок сверить с заказчиком
+  {n:'Каспийский прибрежный кластер', short:'Каспийский кластер', long:1, r:'Республика Дагестан', img:'img/r-kaspij-b.jpg', h1:'Морской курорт на берегу Каспия', p:'Строится первый этап: МФЦ, инженерные сети, дороги, благоустройство и парковки.', x:3432.7, z:1434.4, h:-6},
+];
+const NEWS = [
+  {t:'Выставка Кавказ.РФ о советском наследии Эльбруса переезжает из Москвы в Нальчик', img:'img/n0.jpg', d:'5 ноября 2026', lead:'Московскую выставку «Инфраструктура ожидания» посетили 4 000 человек; в ноябре её покажут в Нальчике, в декабре — в гостинице «Иткол» у Эльбруса.'},
+  {t:'Шесть тысяч школьников побывали на курортах Кавказ.РФ за неделю каникул', img:'img/n1.jpg', d:'2 ноября 2026'},
+  {t:'Коробочные решения Кавказ.РФ помогут отельерам улучшить сервис на завтраках и увеличить число бронирований', img:'img/n2.jpg', d:'30 октября 2026'},
+  {t:'«Эльбрус» и «Мамисон» взяли премии SKI BUSINESS AWARD', img:'img/n3.jpg', d:'29 октября 2026'},
+  {t:'Кавказ.РФ предлагает направлять часть туристического налога на содержание инфраструктуры ОЭЗ', img:'img/n4.jpg', d:'23 октября 2026'},
+  {t:'Кавказ.РФ усилит на «Эльбрусе» защиту от лавин', img:'img/n5.jpg', d:'21 октября 2026'},
+  {t:'Минэкономразвития: частные инвесторы вложили в развитие курорта «Мамисон» почти 7 млрд рублей', img:'img/n6.jpg', d:'20 октября 2026'},
+];
+const ACT = [
+  {tab:'Инфраструктура', l:'Строительство инфраструктуры', h:'164 объекта введено', p:'Коммунальная и горнолыжная инфраструктура курортов. Ещё 8 объектов строятся, 30 проектируются.', img:'img/a1.jpg'},
+  {tab:'Инвестиции', l:'Привлечение инвестиций', h:'Особые экономические зоны на 49 лет', p:'Издержки инвесторов в ОЭЗ в среднем на 30–40% ниже общероссийских.', img:'img/a2.jpg'},
+  {tab:'Бренд', l:'Продвижение бренда', h:'Кавказ — в России и за рубежом', p:'Продвигаем туристический кластер через СМИ, соцсети, блогеров, культурные и художественные проекты.', img:'img/a3.jpg'},
+  {tab:'Природа', l:'Природоохранная деятельность', h:'Бережём природу Кавказа', p:'«Центр природы Кавказа» восстанавливает популяции леопарда — цель не менее 50 особей в дикой природе — и зубра.', img:'img/a4.jpg'},
+  {tab:'Производительность', l:'Повышение производительности', h:'Центр компетенций для туризма', p:'Программа повышения производительности на 2026–2030 годы. Для предприятий участие бесплатное.', img:'img/a5.jpg'},
+];
+const MENU = [
+  {t:'Компания', l:['История','Органы управления','Раскрытие информации','Объявления']},
+  {t:'Деятельность', l:['Строительство инфраструктуры','Привлечение инвестиций','Продвижение бренда','Природоохранная деятельность','Повышение производительности']},
+  {t:'Инвестиции', l:['Инвестпроекты','Инвестору','Как стать резидентом','Список резидентов']},
+  {t:'Закупки и продажи', l:['Закупки','Продажи','План закупок АО «КАВКАЗ.РФ»','Нормативные документы','Информация о закупках у МСП']},
+  {t:'Пресс-центр', l:['Новости','Публикации','Мультимедиа','Контакты для СМИ']},
+  {t:'Контакты', l:['info@ncrc.ru','+7 (495) 775-91-22','Отправить обращение','English']},
+];
+const ARROW = '<svg viewBox="0 0 35 14"><path d="M0 7h33M27 1l6 6-6 6" fill="none" stroke-width="1.6"/></svg>';
+const $ = id => document.getElementById(id);
+const Q = new URLSearchParams(location.search);
+const isDesk = () => innerWidth > 1024;
+const clamp = (v,a,b) => Math.min(b, Math.max(a, v));
+const lerp = (a,b,t) => a + (b-a)*t;
+const sstep = (a,b,v) => { const t = clamp((v-a)/(b-a),0,1); return t*t*(3-2*t); };
+const smoother = t => t*t*t*(t*(t*6-15)+10);
+
+/* ===================== РАЗМЕТКА ИЗ ДАННЫХ ===================== */
+$('res').innerHTML = RES.map((r,i)=>`<article class="r" data-i="${i}">
+  <div class="r-tx">
+    <div class="r-reg">${r.r}</div>
+    <h2 class="r-name${r.long?' long':''}"><span>${r.n}</span></h2>
+    <div class="r-row"><img class="r-th" src="${r.img}" alt=""><div><h3 class="r-h">${r.h1}</h3><p class="r-p">${r.p}</p></div></div>
+    <a href="#" class="lnk">О курорте ${ARROW}</a>
+  </div>
+</article>`).join('');
+$('rail').innerHTML = RES.map((r,i)=>`<button data-i="${i}">${r.short||r.n}</button>`).join('');
+$('newsGrid').innerHTML = NEWS.map((n,i)=> i===0
+  ? `<a href="#" class="n big rv"><div class="n-img"><img src="${n.img}" alt=""></div><div><time>${n.d}</time><h3>${n.t}</h3><p>${n.lead}</p></div></a>`
+  : `<a href="#" class="n rv"><div class="n-img"><img src="${n.img}" alt="" loading="lazy"></div><time>${n.d}</time><h3>${n.t}</h3></a>`).join('');
+$('tabs').innerHTML = ACT.map((a,i)=>`<button data-i="${i}"${i?'':' class="on"'}>${a.tab}</button>`).join('');
+$('actView').innerHTML = ACT.map((a,i)=>`<div class="slide${i?'':' on'}"><div class="slide-tx"><div class="lab">${a.l}</div><h3>${a.h}</h3><p>${a.p}</p><a href="#" class="lnk dark">Подробнее ${ARROW}</a></div><div class="slide-img"><img src="${a.img}" alt="" loading="lazy"></div></div>`).join('');
+$('tabs').addEventListener('click', e=>{ const b = e.target.closest('button'); if(!b) return; const i = +b.dataset.i;
+  [...$('tabs').children].forEach((x,k)=>x.classList.toggle('on',k===i)); [...$('actView').children].forEach((x,k)=>x.classList.toggle('on',k===i)); });
+$('menuGrid').innerHTML = MENU.map(m=>`<div><h4>${m.t}</h4>${m.l.map(x=>`<a href="#">${x}</a>`).join('')}</div>`).join('');
+const menu = $('menu');
+$('burger').onclick = $('fab').onclick = () => menu.classList.add('open');
+$('menuClose').onclick = () => menu.classList.remove('open');
+const io = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }), {rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+/* точки на рельефе */
+const pinsEl = $('pins');
+const STEM = [58, 92, 58, 96, 50, 92, 58, 64];
+const pins = RES.map((r,i)=>{ const d = document.createElement('div'); d.className = 'pin' + (r.sm?' sm':''); d.style.setProperty('--len', STEM[i]+'px');
+  d.innerHTML = `<div class="pph"><img src="${r.img}" alt=""></div><i class="ring"></i><i class="stem"></i><i class="dot"></i><i class="hit"></i><span class="lbl">${r.short||r.n}</span>`;
+  d.addEventListener('click', ()=>goTo(i)); pinsEl.appendChild(d); return d; });
+const DIRS = [[.7071,.7071],[1,0],[.7071,-.7071],[-.7071,.7071],[-1,0]], pinDir = pins.map(()=>-1);   // куда растёт круглое фото: вправо-вниз, вправо, вправо-вверх, влево-вниз, влево
+let lblW = pins.map(()=>90);
+function measureLbl(){ lblW = pins.map(p=>p.querySelector('.lbl').offsetWidth || 90); }
+document.fonts && document.fonts.ready.then(measureLbl); addEventListener('resize', measureLbl);
+const SEAS = [{n:'Чёрное море', x:447, z:1281, h:0}, {n:'Каспийское море', x:3615, z:1008, h:-28}];
+const seas = SEAS.map(s=>{ const d = document.createElement('div'); d.className = 'sea'; d.innerHTML = `<span>${s.n}</span>`; pinsEl.appendChild(d); return d; });
+const PEAK = {x:1371.1, z:882.4, h:5588};   // вершина Эльбруса; подпись — их цифра 5642 м
+const peakEl = document.createElement('div'); peakEl.className = 'peak'; peakEl.innerHTML = '<span><b>Эльбрус</b> · 5642 м</span>'; pinsEl.appendChild(peakEl);
+
+/* ===================== ПУТЬ КАМЕРЫ ===================== */
+// az — куда смотрит камера (0 север, 90 восток), dist — до цели в точках карты (1 точка ≈ 224 м), pitch — наклон вниз, ex — во сколько раз подняты высоты
+// sx, sy — сдвиг цели от центра экрана (доля половины экрана); m* — то же для узкого экрана
+const KEYS = [
+  {x:2000, z:1080, y:0,    az:108, dist:3500, pitch:17, ex:3.3, sx:.14, sy:.22, msy:.56, md:.92},
+  {x:913,  z:790,  y:1900, az:190, dist:205,  pitch:19, ex:2.0},
+  {x:1377, z:898,  y:3900, az:333, dist:235,  pitch:15, ex:2.0},
+  {x:1881, z:1228, y:2300, az:186, dist:200,  pitch:19, ex:2.0},
+  {x:2190, z:1158, y:1700, az:203, dist:205,  pitch:17, ex:2.0},
+  {x:2339, z:1156, y:2000, az:178, dist:185,  pitch:20, ex:2.0},
+  {x:2514, z:1220, y:1600, az:182, dist:195,  pitch:19, ex:2.0},
+  {x:2889, z:1262, y:2000, az:186, dist:205,  pitch:20, ex:2.0},
+  {x:3415, z:1445, y:0,    az:196, dist:300,  pitch:18, ex:2.0},
+  {x:1950, z:1090, y:0,    az:93,  dist:4950, pitch:48, ex:3.3, sx:.36, sy:-.09, msy:.50, md:1.12},
+];
+KEYS.forEach((k,i)=>{ if(k.sx==null){ k.sx=.27; k.sy=-.03; k.msy=.40; k.md=1.12; } k.msx=0; });
+const HOLD = [.55,.62,.62,.62,.62,.62,.62,.62,.62,1.0], MOVE = [.8,.66,.66,.6,.5,.56,.6,.66,.9];
+const HS = [], HE = []; let T = 0;
+KEYS.forEach((k,i)=>{ HS[i]=T; T+=HOLD[i]; HE[i]=T; if(i<KEYS.length-1) T+=MOVE[i]; });
+const fl = $('fl'), stage = $('stage');
+fl.style.height = `calc(var(--sh) * ${(T+1).toFixed(2)})`;
+const angLerp = (a,b,t) => a + ((((b-a)%360)+540)%360-180)*t;
+function keyState(i, ht){   // состояние в точке i; ht 0…1 — насколько пролистали остановку: камера чуть подлетает и поворачивается
+  const k = KEYS[i], port = innerWidth/stage.clientHeight < 1;
+  const far = i===0 || i===KEYS.length-1;
+  return {x:k.x, z:k.z, y:k.y, az:k.az + (ht-.5)*(far?5:7), dist:k.dist*(port?k.md:1)*(1-(far?.07:.06)*ht), pitch:k.pitch, ex:k.ex, sx:port?k.msx:k.sx, sy:port?k.msy:k.sy};
+}
+function stateAt(u){
+  u = clamp(u, 0, T);
+  for(let i=0;i<KEYS.length;i++){
+    if(u <= HE[i]) return keyState(i, (u-HS[i])/HOLD[i]);
+    if(u < HS[i+1]){
+      const t = (u-HE[i])/MOVE[i], e = smoother(t), a = keyState(i,1), b = keyState(i+1,0);
+      const d = Math.hypot(b.x-a.x, b.z-a.z), bump = Math.sin(Math.PI*t);
+      const big = Math.max(a.dist,b.dist) > 1000;
+      const o = {};
+      for(const key of ['x','z','y','pitch','ex','sx','sy']) o[key] = lerp(a[key], b[key], e);
+      o.az = angLerp(a.az, b.az, e);
+      o.dist = Math.exp(lerp(Math.log(a.dist), Math.log(b.dist), e)) + (big?0:d*.42*bump);
+      if(!big) o.pitch += 5*bump*Math.min(1,d/400);
+      return o;
+    }
+  }
+}
+// какой текст показан
+function modeAt(u){
+  if(u < HE[0] + MOVE[0]*.42) return {m:'intro', a:-1};
+  for(let i=1;i<=RES.length;i++){ const end = HE[i] + MOVE[i]*(i===RES.length?.4:.5); if(u < end) return {m:'res', a:i-1}; }
+  return {m:'outro', a:-1};
+}
+
+/* ===================== ПРОКРУТКА И ТЕКСТЫ ===================== */
+let uGoal = 0, uCur = 0, curMode = '', curAct = -2;
+const hdr = $('hdr'), fab = $('fab'), intro = $('intro'), rail = $('rail'), inv = $('inv'), resEls = [...$('res').children], railBtns = [...rail.children];
+function vhNow(){ return stage.clientHeight; }
+function onScroll(){
+  const y = scrollY, top = fl.offsetTop, vh = vhNow();
+  uGoal = clamp((y-top)/vh, 0, T);
+  const flEnd = top + fl.offsetHeight - 78;
+  hdr.classList.toggle('solid', y > flEnd);
+  fab.classList.toggle('on', y > 60);
+}
+addEventListener('scroll', onScroll, {passive:true});
+function setMode(md){
+  if(md.m===curMode && md.a===curAct) return;
+  curMode = md.m; curAct = md.a;
+  intro.classList.toggle('go', md.m==='intro' && booted);
+  stage.classList.remove('m-intro','m-res','m-outro'); stage.classList.add('m-'+md.m);
+  hdr.classList.toggle('moved', md.m!=='intro');
+  resEls.forEach((el,i)=>el.classList.toggle('on', i===md.a));
+  railBtns.forEach((el,i)=>el.classList.toggle('on', i===md.a));
+  rail.classList.toggle('on', md.m==='res');
+  inv.classList.toggle('on', md.m==='outro');
+  pins.forEach((p,i)=>p.classList.toggle('cur', i===md.a));
+  peakEl.classList.toggle('on', md.a===1);
+  if(noGL && md.a>=0) $('noglBg').style.backgroundImage = `url(${RES[md.a].img})`;
+}
+function goTo(i){ const u = (HS[i+1]+HE[i+1])/2; scrollTo({top: fl.offsetTop + u*vhNow(), behavior:'smooth'}); }
+rail.addEventListener('click', e=>{ const b = e.target.closest('button'); if(b) goTo(+b.dataset.i); });
+const railPh = document.createElement('div'); railPh.className = 'rail-ph'; railPh.innerHTML = '<img alt="">'; rail.appendChild(railPh);
+rail.addEventListener('mouseover', e=>{ const b = e.target.closest('button'); if(!b) return; const i = +b.dataset.i;
+  if(i===curAct){ railPh.classList.remove('on'); return; }
+  railPh.firstChild.src = RES[i].img; railPh.style.top = (b.offsetTop + b.offsetHeight/2) + 'px'; railPh.classList.add('on'); });
+rail.addEventListener('mouseleave', ()=>railPh.classList.remove('on'));
+function countUp(el, delay){
+  const txt = el.dataset.n, to = parseFloat(txt.replace(',','.')), small = el.querySelector('small'), node = el.firstChild, t0 = performance.now()+delay, dur = 1500;
+  (function tick(now){ const k = clamp((now-t0)/dur,0,1), e = 1-Math.pow(1-k,4); node.nodeValue = (to*e).toFixed(1).replace('.',','); if(k<1) requestAnimationFrame(tick); else node.nodeValue = txt; })(performance.now());
+}
+function kpiH(){ document.documentElement.style.setProperty('--kpi-h', $('kpi').offsetHeight + 'px'); }
+addEventListener('resize', kpiH); document.fonts && document.fonts.ready.then(kpiH); kpiH();
+
+/* ===================== РЕЛЬЕФ: WebGL2 ===================== */
+const W = 3840, H = 2048, CELL = 223.6;            // размер карты высот и метров в одной точке
+const canvas = $('gl');
+let gl = null, noGL = false, booted = false, rise = 0, riseT0 = 0;
+const GLSL_H = `
+const ivec2 SZ = ivec2(${W},${H});
+const float CELL = ${CELL.toFixed(1)};
+float hm(ivec2 p){ vec4 t = texelFetch(uH, clamp(p, ivec2(0), SZ-1), 0); return (t.r*65280.0 + t.g*255.0)*2.0 - 28.0; }`;
+const GLSL_SKY = `
+uniform vec3 uSun;
+vec3 sky(vec3 d){
+  float t = d.y;
+  vec3 hor = vec3(0.30,0.46,0.80), mid = vec3(0.035,0.075,0.27), zen = vec3(0.010,0.022,0.085), gnd = vec3(0.012,0.028,0.105);
+  vec3 c = mix(hor, mid, smoothstep(0.0,0.20,t));
+  c = mix(c, zen, smoothstep(0.16,0.75,t));
+  c = mix(c, gnd, smoothstep(0.0,-0.30,t));
+  float s = max(dot(normalize(d), uSun), 0.0);
+  c += vec3(1.0,0.72,0.46)*(pow(s,6.0)*0.10 + pow(s,40.0)*0.22);
+  return c;
+}
+float hash(vec2 p){ p = fract(p*vec2(123.34,456.21)); p += dot(p,p+45.32); return fract(p.x*p.y); }
+vec3 tone(vec3 c){ c *= 1.15; c = (c*(2.51*c+0.03))/(c*(2.43*c+0.59)+0.14); return pow(clamp(c,0.0,1.0), vec3(1.0/2.2)); }`;
+const VS_FULL = `#version 300 es
+out vec2 vP; void main(){ vec2 p = vec2(float((gl_VertexID<<1)&2), float(gl_VertexID&2))*2.0-1.0; vP = p; gl_Position = vec4(p,0.0,1.0); }`;
+// запекание: уклон, тень от солнца и затенение ущелий считаются один раз при открытии
+const FS_BAKE = `#version 300 es
+precision highp float; precision highp int;
+uniform highp sampler2D uH; uniform vec3 uSunB; uniform float uExB; uniform int uStep;
+out vec4 o;
+${GLSL_H}
+float hl(vec2 p){ vec2 f = fract(p); ivec2 i = ivec2(floor(p)); return mix(mix(hm(i),hm(i+ivec2(1,0)),f.x), mix(hm(i+ivec2(0,1)),hm(i+ivec2(1,1)),f.x), f.y); }
+void main(){
+  ivec2 p = ivec2(gl_FragCoord.xy)*uStep; float h = hm(p), s = float(uStep);
+  vec2 g = vec2(hm(p+ivec2(uStep,0))-hm(p-ivec2(uStep,0)), hm(p+ivec2(0,uStep))-hm(p-ivec2(0,uStep)))/(2.0*s*CELL);
+  vec2 dir = normalize(uSunB.xz); float tanE = uSunB.y/length(uSunB.xz);
+  float sh = 1.0, t = 1.5, h0 = h*uExB;
+  for(int i=0;i<44;i++){ float ht = hl(vec2(p)+dir*t)*uExB; sh = min(sh, (h0 + t*CELL*tanE + 12.0 - ht)/(t*CELL)*13.0); t = t*1.11+0.25; }
+  sh = clamp(sh,0.0,1.0);
+  const float AT[5] = float[5](1.5,3.0,6.0,11.0,19.0);
+  float ao = 0.0;
+  for(int k=0;k<8;k++){ float a = 0.7853982*(float(k)+0.5); vec2 d = vec2(cos(a),sin(a)); float mx = 0.0;
+    for(int j=0;j<5;j++){ float tt = AT[j]; float ht = hm(p+ivec2(floor(d*tt+0.5))); mx = max(mx,(ht-h)*uExB/(tt*CELL)); }
+    ao += 1.0 - mx*inversesqrt(1.0+mx*mx); }
+  ao /= 8.0;
+  vec2 e = sign(g)*sqrt(min(abs(g),vec2(4.0))/4.0);
+  o = vec4(e*0.5+0.5, sh, ao);
+}`;
+// грубая карта высот для расчётов на процессоре (чтобы камера не уходила под землю)
+const FS_PROBE = `#version 300 es
+precision highp float; precision highp int;
+uniform highp sampler2D uH; out vec4 o;
+${GLSL_H}
+void main(){ ivec2 p = ivec2(gl_FragCoord.xy)*8; float m = -28.0;
+  for(int j=0;j<4;j++) for(int i=0;i<4;i++) m = max(m, hm(p+ivec2(i,j)*2));
+  float v = (m+28.0)/2.0; o = vec4(floor(v/256.0)/255.0, mod(v,256.0)/255.0, 0.0, 1.0); }`;
+const FS_SKY = `#version 300 es
+precision highp float;
+uniform vec3 uF, uR, uU; uniform vec2 uShift; uniform float uTime;
+in vec2 vP; out vec4 o;
+${GLSL_SKY}
+void main(){ vec2 n = vP - uShift; vec3 d = normalize(uF + uR*n.x + uU*n.y); vec3 c = tone(sky(d)); c += (hash(gl_FragCoord.xy+fract(uTime))-0.5)/255.0; o = vec4(c,1.0); }`;
+// подробные высоты у курортов (в 4 раза подробнее общей карты): та же упаковка, картинка 1024×1024
+const GLSL_HI = `
+uniform highp sampler2D uHi;
+float hh(ivec2 p){ vec4 t = texelFetch(uHi, clamp(p, ivec2(0), ivec2(1023)), 0); return (t.r*65280.0 + t.g*255.0)*2.0 - 28.0; }`;
+// запекание света для подробного куска: уклон и мелкое затенение — по подробным высотам, тень от солнца — по обоим слоям
+const FS_BAKE_HI = `#version 300 es
+precision highp float; precision highp int;
+uniform highp sampler2D uH; uniform vec3 uSunB; uniform float uExB; uniform vec2 uHiOrg;
+out vec4 o;
+${GLSL_H}
+${GLSL_HI}
+float hl(vec2 p){ vec2 f = fract(p); ivec2 i = ivec2(floor(p)); return mix(mix(hm(i),hm(i+ivec2(1,0)),f.x), mix(hm(i+ivec2(0,1)),hm(i+ivec2(1,1)),f.x), f.y); }
+float hhl(vec2 p){ vec2 f = fract(p); ivec2 i = ivec2(floor(p)); return mix(mix(hh(i),hh(i+ivec2(1,0)),f.x), mix(hh(i+ivec2(0,1)),hh(i+ivec2(1,1)),f.x), f.y); }
+float hAt(vec2 w){ vec2 q = (w-uHiOrg)*4.0; return (q.x>=0.0 && q.y>=0.0 && q.x<=1023.0 && q.y<=1023.0) ? hhl(q) : hl(w); }
+void main(){
+  ivec2 p = ivec2(gl_FragCoord.xy); float h = hh(p), c4 = CELL*0.25;
+  vec2 g = vec2(hh(p+ivec2(1,0))-hh(p-ivec2(1,0)), hh(p+ivec2(0,1))-hh(p-ivec2(0,1)))/(2.0*c4);
+  vec2 w0 = uHiOrg + vec2(p)*0.25, dir = normalize(uSunB.xz); float tanE = uSunB.y/length(uSunB.xz);
+  float sh = 1.0, t = 0.4, h0 = h*uExB;
+  for(int i=0;i<52;i++){ float ht = hAt(w0+dir*t)*uExB; sh = min(sh, (h0 + t*CELL*tanE + 14.0 - ht)/(max(t,1.6)*CELL)*10.0); t = t*1.10+0.1; }
+  sh = clamp(sh,0.0,1.0);
+  const float AT[5] = float[5](1.5,3.0,6.0,11.0,19.0);
+  float ao = 0.0;
+  for(int k=0;k<8;k++){ float a = 0.7853982*(float(k)+0.5); vec2 d = vec2(cos(a),sin(a)); float mx = 0.0;
+    for(int j=0;j<5;j++){ float tt = AT[j]; float ht = hh(p+ivec2(floor(d*tt+0.5))); mx = max(mx,(ht-h)*uExB/(tt*c4)); }
+    ao += 1.0 - mx*inversesqrt(1.0+mx*mx); }
+  ao /= 8.0;
+  vec2 e = sign(g)*sqrt(min(abs(g),vec2(4.0))/4.0);
+  o = vec4(e*0.5+0.5, sh, ao);
+}`;
+// рельеф рисуется полосами без единого буфера: место вершины считается по её номеру
+// три слоя: 0 — вся карта (шаг 4 точки), 1 — квадрат вокруг цели камеры (шаг 1), 2 — подробный кусок у курорта (шаг 1/4)
+const VS_TER = `#version 300 es
+precision highp float; precision highp int;
+uniform highp sampler2D uH;
+uniform mat4 uVP; uniform vec2 uShift; uniform ivec2 uOrg; uniform int uS, uLvl; uniform float uExU; uniform vec4 uPatch, uHiP;
+out vec3 vW; out float vH; out float vK;
+${GLSL_H}
+${GLSL_HI}
+float hc(ivec2 i){ float c = hm(i), a = hm(i+ivec2(2,0)), b = hm(i-ivec2(2,0)), d = hm(i+ivec2(0,2)), e = hm(i-ivec2(0,2));
+  return mix((2.0*c+a+b+d+e)/6.0, max(c,max(max(a,b),max(d,e))), 0.5); }
+float tri(vec2 pf){ vec2 c = floor(pf/4.0), f = pf/4.0 - c; ivec2 i = ivec2(c)*4;
+  float h00 = hc(i), h10 = hc(i+ivec2(4,0)), h01 = hc(i+ivec2(0,4)), h11 = hc(i+ivec2(4,4));
+  return (f.x+f.y<=1.0) ? h00 + f.x*(h10-h00) + f.y*(h01-h00) : h11 + (1.0-f.x)*(h01-h11) + (1.0-f.y)*(h10-h11); }
+float tri1(vec2 w){ vec2 c = floor(w), f = w - c; ivec2 i = ivec2(c);
+  float h00 = hm(i), h10 = hm(i+ivec2(1,0)), h01 = hm(i+ivec2(0,1)), h11 = hm(i+ivec2(1,1));
+  return (f.x+f.y<=1.0) ? h00 + f.x*(h10-h00) + f.y*(h01-h00) : h11 + (1.0-f.x)*(h01-h11) + (1.0-f.y)*(h10-h11); }
+void main(){
+  int col = gl_VertexID >> 1, row = gl_InstanceID + (gl_VertexID & 1);
+  float h, k = 0.0; vec2 xz;
+  if(uLvl==2){
+    ivec2 q = ivec2(col,row); xz = uHiP.xy + vec2(q)*0.25;
+    vec2 d2 = abs(xz-(uHiP.xy+127.875))/127.875;
+    k = (1.0-smoothstep(0.80,0.96,max(d2.x,d2.y)))*uHiP.z;      // к краю куска и при отлёте подробности плавно сходят на нет
+    h = hh(q); if(k<1.0) h = mix(tri1(xz), h, k);
+  } else {
+    ivec2 p = uOrg + ivec2(col,row)*uS; xz = vec2(p);
+    if(uLvl==1){ h = hm(p); vec2 d2 = abs(xz-uPatch.xy)/uPatch.z; float m = smoothstep(0.78,0.95,max(d2.x,d2.y)); if(m>0.0) h = mix(h, tri(xz), m); }
+    else h = hc(p);
+  }
+  vH = h; vK = k; vec3 w = vec3(xz.x, h*uExU, xz.y); vW = w;
+  vec4 c = uVP*vec4(w,1.0); c.xy += uShift*c.w; gl_Position = c;
+}`;
+const FS_TER = `#version 300 es
+precision highp float; precision highp int;
+uniform highp sampler2D uH; uniform sampler2D uB, uBH;
+uniform vec3 uCam; uniform float uEx, uTime, uFog, uRise, uHiOn, uDbg; uniform vec4 uPatch, uHiP; uniform int uLvl;
+in vec3 vW; in float vH; in float vK; out vec4 o;
+const vec2 SZF = vec2(${W}.0,${H}.0);
+${GLSL_SKY}
+float vn(vec2 p){ vec2 i = floor(p), f = fract(p); f = f*f*(3.0-2.0*f); return mix(mix(hash(i),hash(i+vec2(1,0)),f.x), mix(hash(i+vec2(0,1)),hash(i+vec2(1,1)),f.x), f.y); }
+float fbm(vec2 p){ float a = 0.5, s = 0.0; for(int i=0;i<4;i++){ s += a*vn(p); p = p*2.03+17.1; a *= 0.5; } return s; }
+void main(){
+  if(uLvl==0 && uPatch.w>0.5){ vec2 d2 = abs(vW.xz-uPatch.xy)/uPatch.z; if(max(d2.x,d2.y)<0.985) discard; }
+  if(uLvl==1 && uHiOn>0.5){ vec2 d2 = abs(vW.xz-(uHiP.xy+127.875))/127.875; if(max(d2.x,d2.y)<0.985) discard; }
+  vec2 uv = (vW.xz+0.5)/SZF;
+  vec4 b = texture(uB, uv);
+  vec2 e = b.xy*2.0-1.0, g = e*abs(e)*4.0;
+  float shB = b.z, aoB = b.w, kH = 0.0;
+  if(uLvl==2){ kH = vK; vec4 bh = texture(uBH, ((vW.xz-uHiP.xy)*4.0+0.5)/1024.0); vec2 eh = bh.xy*2.0-1.0;
+    vec2 uvh = ((vW.xz-uHiP.xy)*4.0+0.5)/1024.0;
+    g = mix(g, eh*abs(eh)*4.0, kH); shB = mix(shB, mix(bh.z, textureLod(uBH, uvh, 1.4).z, 0.4), kH); aoB *= mix(1.0, bh.w, kH); }
+  if(uDbg>0.5){ float hs = 0.55-(g.x*0.7-g.y*0.7)*0.9; if(uDbg>1.5) hs = shB; if(uDbg>2.5) hs = aoB; o = vec4(vec3(hs)*(uLvl==2?vec3(1.0,0.95,0.9):vec3(0.9,0.95,1.0)),1.0); return; }
+  float slope = length(g);
+  vec3 V = normalize(vW-uCam); float dist = length(vW-uCam);
+  float nearK = 1.0-smoothstep(260.0,900.0,dist);
+  // там, где подробных высот нет, склоны вблизи чуть «шершавые», чтобы не были гладкими
+  vec2 dp = vW.xz*2.7; float d0 = vn(dp)+0.5*vn(dp*2.1+3.7);
+  vec2 dg = vec2(vn(dp+vec2(0.4,0.0))+0.5*vn(dp*2.1+vec2(4.54,3.7)), vn(dp+vec2(0.0,0.4))+0.5*vn(dp*2.1+vec2(3.7,4.54))) - d0;
+  vec2 gd = g + dg*0.5*smoothstep(0.12,0.7,slope)*nearK*(1.0-kH);
+  vec3 n = normalize(vec3(-gd.x*uEx, 1.0, -gd.y*uEx));
+  float wat = smoothstep(0.44,0.56, texture(uH, uv).b);
+  float n1 = fbm(vW.xz*0.035), n2 = vn(vW.xz*0.8), n3 = vn(vW.xz*4.3), n4 = vn(vW.xz*3.3);
+  // земля: равнина → предгорья → альпийский пояс; крутые стены — тёмная скала
+  float hN = vH + (n1-0.5)*440.0;
+  vec3 alb = mix(vec3(0.020,0.042,0.150), vec3(0.030,0.056,0.160), smoothstep(100.0,1500.0,hN));
+  alb = mix(alb, vec3(0.085,0.120,0.220), smoothstep(1500.0,2600.0,hN));
+  float steep = smoothstep(0.62,1.25,slope);
+  alb = mix(alb, vec3(0.050,0.066,0.115)*(0.8+0.4*n4), steep*smoothstep(1300.0,2300.0,vH));
+  // снег: чем выше, тем больше; на крутых стенах и на солнечных склонах его меньше
+  float asp = dot(-g/max(slope,1e-4), normalize(uSun.xz))*smoothstep(0.08,0.45,slope);
+  float sl = hN + (n2-0.5)*260.0 + (n3-0.5)*150.0*nearK - asp*210.0;
+  float snow = smoothstep(1880.0,2720.0,sl)*(1.0-0.88*steep*(0.75+0.5*n4));
+  snow = mix(snow, smoothstep(0.30,0.62,snow), 0.55*(1.0-kH));
+  snow = max(snow, smoothstep(3250.0,3850.0,vH)*(1.0-0.45*steep));
+  alb = mix(alb, vec3(0.82,0.86,0.93), snow);
+  float shs = smoothstep(0.32,0.68, shB+(n3-0.5)*0.14*nearK);
+  float sh = mix(1.0, mix(shB, shs, 0.8*(1.0-kH)), uRise), ao = mix(1.0, aoB, uRise);
+  float ndl = max(dot(n,uSun),0.0);
+  vec3 col = alb*(vec3(1.0,0.92,0.80)*2.15*ndl*sh + vec3(0.36,0.50,0.90)*0.66*(0.30+0.70*ao*ao) + vec3(0.10,0.11,0.13)*snow*ao);
+  // горизонтали через 250 м: на общих видах заметнее, вблизи почти уходят
+  float ci = vH/250.0, cw = fwidth(ci);
+  float cl = (1.0-smoothstep(0.0,1.4,abs(fract(ci-0.5)-0.5)/max(cw,1e-5)))*(1.0-smoothstep(0.22,0.5,cw));
+  col += mix(vec3(0.09,0.15,0.30), vec3(-0.07,-0.05,0.0), snow)*cl*mix(0.46,0.13,nearK)*uRise;
+  // вода
+  vec3 wn = normalize(vec3((vn(vW.xz*0.9+uTime*0.10)-0.5)*0.05, 1.0, (vn(vW.zx*1.1-uTime*0.08)-0.5)*0.05));
+  vec3 R = reflect(V,wn); float fr = pow(1.0-max(dot(-V,wn),0.0),4.0);
+  vec3 wc = mix(vec3(0.004,0.013,0.065), sky(vec3(R.x,abs(R.y),R.z)), 0.08+0.8*fr);
+  wc += vec3(1.0,0.86,0.68)*pow(max(dot(R,uSun),0.0),220.0)*0.32*b.z;
+  col = mix(col, wc, wat);
+  // дымка и края карты уходят в небо
+  vec3 sk = sky(V);
+  col = mix(col, sk, 1.0-exp(-pow(dist*uFog,1.3)));
+  float edge = min(min(vW.x,SZF.x-vW.x), min(vW.z,SZF.y-vW.z));
+  col = mix(sk, col, smoothstep(0.0,300.0,edge));
+  col = tone(col); col += (hash(gl_FragCoord.xy+fract(uTime))-0.5)/255.0;
+  o = vec4(col,1.0);
+}`;
+
+function prog(vs, fs){
+  const p = gl.createProgram();
+  for(const [t,src] of [[gl.VERTEX_SHADER,vs],[gl.FRAGMENT_SHADER,fs]]){
+    const s = gl.createShader(t); gl.shaderSource(s,src); gl.compileShader(s);
+    if(!gl.getShaderParameter(s,gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s));
+    gl.attachShader(p,s);
+  }
+  gl.linkProgram(p); if(!gl.getProgramParameter(p,gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(p));
+  const u = {}; const n = gl.getProgramParameter(p, gl.ACTIVE_UNIFORMS);
+  for(let i=0;i<n;i++){ const a = gl.getActiveUniform(p,i); u[a.name.replace('[0]','')] = gl.getUniformLocation(p,a.name); }
+  return {p,u};
+}
+const SUN_AZ = +(Q.get('saz') ?? 262), SUN_EL = +(Q.get('sel') ?? 24);
+const rad = Math.PI/180;
+const SUN = [Math.cos(SUN_EL*rad)*Math.sin(SUN_AZ*rad), Math.sin(SUN_EL*rad), -Math.cos(SUN_EL*rad)*Math.cos(SUN_AZ*rad)];
+const EX_BAKE = 2.3;
+let pBake, pBakeHi, pProbe, pSky, pTer, texH, texB, low = null;
+// подробные куски у курортов: ox, oz — левый верхний угол в точках общей карты (из tools/vysoty-vblizi.py)
+const HI = [[784,664],[1248,772],[1752,1100],[2064,1032],[2212,1028],[2388,1092],[2760,1136],[3288,1316]].map((o,i)=>({ox:o[0], oz:o[1], url:['data/hi-1.webp','data/hi-2.webp','data/hi-3.webp','data/hi-4.webp','data/hi-5.webp','data/hi-6.webp','data/hi-7.webp','data/hi-8.webp'][i], ready:false}));
+const LW = 480, LH = 256;
+function lowH(x, z){    // высота (м) по грубой карте
+  if(!low) return 0; const fx = clamp(x/8,0,LW-1.001), fz = clamp(z/8,0,LH-1.001), i = fx|0, j = fz|0, a = fx-i, b = fz-j;
+  return lerp(lerp(low[j*LW+i],low[j*LW+i+1],a), lerp(low[(j+1)*LW+i],low[(j+1)*LW+i+1],a), b);
+}
+async function initGL(){
+  const tA = performance.now();
+  gl = canvas.getContext('webgl2', {antialias:true, alpha:false, powerPreference:'high-performance'});
+  if(!gl) throw new Error('нет WebGL2');
+  const blob = await (await fetch('data/vysoty.webp')).blob();
+  let bmp; try{ bmp = await createImageBitmap(blob, {premultiplyAlpha:'none', colorSpaceConversion:'none'}); }catch(e){ bmp = await createImageBitmap(blob); }
+  pBake = prog(VS_FULL, FS_BAKE); pProbe = prog(VS_FULL, FS_PROBE); pSky = prog(VS_FULL, FS_SKY); pTer = prog(VS_TER, FS_TER);
+  texH = gl.createTexture(); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, texH);
+  gl.pixelStorei(gl.UNPACK_COLORSPACE_CONVERSION_WEBGL, gl.NONE); gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false);
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA8, gl.RGBA, gl.UNSIGNED_BYTE, bmp); bmp.close && bmp.close();
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  gl.disable(gl.DEPTH_TEST); gl.disable(gl.BLEND);
+  const fb = gl.createFramebuffer(); gl.bindFramebuffer(gl.FRAMEBUFFER, fb);
+  // грубая карта высот на процессор; заодно проверка, что высоты прочитались верно (Эльбрус выше 5 км)
+  const tp = gl.createTexture(); gl.activeTexture(gl.TEXTURE2); gl.bindTexture(gl.TEXTURE_2D, tp);
+  gl.texStorage2D(gl.TEXTURE_2D, 1, gl.RGBA8, LW, LH);
+  gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, tp, 0);
+  gl.viewport(0,0,LW,LH); gl.useProgram(pProbe.p); gl.uniform1i(pProbe.u.uH, 0); gl.drawArrays(gl.TRIANGLES,0,3);
+  const px = new Uint8Array(LW*LH*4); gl.readPixels(0,0,LW,LH,gl.RGBA,gl.UNSIGNED_BYTE,px);
+  low = new Float32Array(LW*LH); let top = 0;
+  for(let i=0;i<LW*LH;i++){ low[i] = (px[i*4]*256+px[i*4+1])*2-28; if(low[i]>top) top = low[i]; }
+  if(top < 5000 || top > 6000) throw new Error('карта высот прочитана неверно: ' + top);
+  // запекание света, полосами по кадрам, чтобы окно не замирало
+  const step = isDesk() ? 1 : 2, BW = W/step, BH = H/step;
+  texB = gl.createTexture(); gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, texB);
+  gl.texStorage2D(gl.TEXTURE_2D, Math.floor(Math.log2(BW))+1, gl.RGBA8, BW, BH);
+  gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texB, 0);
+  gl.useProgram(pBake.p); gl.uniform1i(pBake.u.uH, 0); gl.uniform3fv(pBake.u.uSunB, SUN); gl.uniform1f(pBake.u.uExB, EX_BAKE); gl.uniform1i(pBake.u.uStep, step);
+  gl.viewport(0,0,BW,BH); gl.enable(gl.SCISSOR_TEST);
+  const STR = 16;
+  for(let s=0;s<STR;s++){
+    gl.bindFramebuffer(gl.FRAMEBUFFER, fb); gl.useProgram(pBake.p); gl.viewport(0,0,BW,BH); gl.enable(gl.SCISSOR_TEST);
+    gl.scissor(0, Math.floor(BH*s/STR), BW, Math.ceil(BH/STR)+1); gl.drawArrays(gl.TRIANGLES,0,3); gl.flush();
+    await new Promise(r=>requestAnimationFrame(r));
+  }
+  gl.disable(gl.SCISSOR_TEST); gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+  gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, texB); gl.generateMipmap(gl.TEXTURE_2D);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  const an = gl.getExtension('EXT_texture_filter_anisotropic'); if(an) gl.texParameterf(gl.TEXTURE_2D, an.TEXTURE_MAX_ANISOTROPY_EXT, Math.min(8, gl.getParameter(an.MAX_TEXTURE_MAX_ANISOTROPY_EXT)));
+  gl.deleteTexture(tp); gl.deleteFramebuffer(fb);
+  // пустышки на местах подробного куска, пока он не загружен
+  for(const unit of [gl.TEXTURE2, gl.TEXTURE3]){ const d = gl.createTexture(); gl.activeTexture(unit); gl.bindTexture(gl.TEXTURE_2D, d);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA8, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0,0,0,255])); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST); }
+  gl.finish(); window.bakeMs = Math.round(performance.now()-tA);
+}
+
+// подробные куски грузятся после первого экрана, по одному, не мешая показу; на телефоне не грузятся
+async function loadHi(){
+  if(!isDesk() || Q.get('hi')==='0') return;
+  pBakeHi = prog(VS_FULL, FS_BAKE_HI);
+  const fb = gl.createFramebuffer(), an = gl.getExtension('EXT_texture_filter_anisotropic');
+  for(const hp of HI){
+    const blob = await (await fetch(hp.url)).blob();
+    let bmp; try{ bmp = await createImageBitmap(blob, {premultiplyAlpha:'none', colorSpaceConversion:'none'}); }catch(e){ bmp = await createImageBitmap(blob); }
+    await new Promise(r=>requestAnimationFrame(r));
+    hp.texH = gl.createTexture(); gl.activeTexture(gl.TEXTURE4); gl.bindTexture(gl.TEXTURE_2D, hp.texH);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA8, gl.RGBA, gl.UNSIGNED_BYTE, bmp); bmp.close && bmp.close();
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    hp.texB = gl.createTexture(); gl.activeTexture(gl.TEXTURE5); gl.bindTexture(gl.TEXTURE_2D, hp.texB);
+    gl.texStorage2D(gl.TEXTURE_2D, 11, gl.RGBA8, 1024, 1024);
+    gl.bindFramebuffer(gl.FRAMEBUFFER, fb); gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, hp.texB, 0);
+    gl.disable(gl.DEPTH_TEST); gl.disable(gl.SCISSOR_TEST); gl.viewport(0,0,1024,1024); gl.useProgram(pBakeHi.p);
+    gl.uniform1i(pBakeHi.u.uH, 0); gl.uniform1i(pBakeHi.u.uHi, 4); gl.uniform3fv(pBakeHi.u.uSunB, SUN); gl.uniform1f(pBakeHi.u.uExB, EX_BAKE); gl.uniform2f(pBakeHi.u.uHiOrg, hp.ox-.375, hp.oz-.375);
+    gl.drawArrays(gl.TRIANGLES,0,3);
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null); gl.generateMipmap(gl.TEXTURE_2D);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    if(an) gl.texParameterf(gl.TEXTURE_2D, an.TEXTURE_MAX_ANISOTROPY_EXT, Math.min(8, gl.getParameter(an.MAX_TEXTURE_MAX_ANISOTROPY_EXT)));
+    hp.ready = true;
+    await new Promise(r=>requestAnimationFrame(r));
+  }
+  gl.deleteFramebuffer(fb); window.hiReady = true;
+}
+
+/* матрицы */
+function persp(fovy, asp, n, f){ const t = 1/Math.tan(fovy/2); return [t/asp,0,0,0, 0,t,0,0, 0,0,(f+n)/(n-f),-1, 0,0,2*f*n/(n-f),0]; }
+const sub = (a,b)=>[a[0]-b[0],a[1]-b[1],a[2]-b[2]], cross = (a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]], dot = (a,b)=>a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
+const norm = a=>{ const l = Math.hypot(a[0],a[1],a[2]); return [a[0]/l,a[1]/l,a[2]/l]; };
+function mul(a,b){ const o = new Float32Array(16); for(let c=0;c<4;c++) for(let r=0;r<4;r++) o[c*4+r] = a[r]*b[c*4]+a[4+r]*b[c*4+1]+a[8+r]*b[c*4+2]+a[12+r]*b[c*4+3]; return o; }
+
+let cw = 0, ch = 0, dpr = 1;
+function resize(){
+  dpr = Math.min(devicePixelRatio||1, isDesk()?2:2);
+  const w = Math.round(stage.clientWidth*dpr), h = Math.round(stage.clientHeight*dpr);
+  if(w!==cw || h!==ch){ cw = canvas.width = w; ch = canvas.height = h; }
+}
+let mx = 0, my = 0, mxs = 0, mys = 0;
+addEventListener('pointermove', e=>{ if(e.pointerType==='mouse'){ mx = e.clientX/innerWidth*2-1; my = e.clientY/innerHeight*2-1; } }, {passive:true});
+let lastT = 0, visible = true, cam = null, VP = null, shift = [0,0];
+new IntersectionObserver(es=>{ visible = es[0].isIntersecting; }).observe(fl);
+let HOLDK = Q.get('k');   // для настройки: ?k=3 — стоять на остановке 3; в консоли setK(3), OV.az = 200
+const OV = {}; for(const key of ['az','dist','pitch','x','z','y','sx','sy','ex','ht']) if(Q.get(key)!=null) OV[key] = +Q.get(key);
+window.OV = OV; window.setK = k => { HOLDK = k; for(const key in OV) delete OV[key]; };
+function frame(now){
+  requestAnimationFrame(frame);
+  if(!booted || !visible || document.hidden) { lastT = now; return; }
+  const dt = Math.min(.05, (now-lastT)/1000 || .016); lastT = now;
+  const t = now/1000;
+  if(HOLDK!=null){ const k = +HOLDK; uGoal = HS[k] + HOLD[k]*(OV.ht ?? .5); uCur = uGoal; }
+  uCur += (uGoal-uCur)*(1-Math.exp(-dt*5.2)); if(Math.abs(uGoal-uCur)<1e-4) uCur = uGoal;
+  setMode(modeAt(uCur));
+  rise = clamp((now-riseT0)/2600, 0, 1); const rz = 1-Math.pow(1-rise, 3.2);
+  mxs += (mx-mxs)*(1-Math.exp(-dt*3)); mys += (my-mys)*(1-Math.exp(-dt*3));
+  const s = stateAt(uCur);
+  for(const key in OV) if(key!=='ht') s[key] = OV[key];
+  const far = s.dist > 900;
+  const az = (s.az + Math.sin(t*.11)*(far?.9:1.4) + mxs*(far?1.6:2.6))*rad, pitch = (s.pitch - mys*(far?.7:1.1) + (1-rz)*5)*rad;
+  const dist = s.dist*(1+(1-rz)*.10), ex = s.ex*rz, exU = ex/CELL;
+  const asp = cw/ch, fovy = asp >= 1.25 ? 31*rad : Math.min(64*rad, 2*Math.atan(Math.tan(17.5*rad)*1.25/asp));
+  const L = [Math.sin(az), 0, -Math.cos(az)];
+  const tgt = [s.x, s.y*exU, s.z];
+  let eye = [tgt[0]-L[0]*dist*Math.cos(pitch), tgt[1]+dist*Math.sin(pitch), tgt[2]-L[2]*dist*Math.cos(pitch)];
+  const ground = lowH(eye[0], eye[2])*exU + Math.max(6, dist*.05); if(eye[1] < ground) eye[1] = ground;
+  const F = norm(sub(tgt, eye)), Rv = norm(cross(F,[0,1,0])), Uv = cross(Rv,F);
+  const view = [Rv[0],Uv[0],-F[0],0, Rv[1],Uv[1],-F[1],0, Rv[2],Uv[2],-F[2],0, -dot(Rv,eye),-dot(Uv,eye),dot(F,eye),1];
+  const near = Math.max(1.5, dist*.03), P = persp(fovy, asp, near, 11000);
+  VP = mul(P, view); shift = [s.sx, s.sy]; cam = eye;
+  const th = Math.tan(fovy/2);
+
+  resize(); gl.viewport(0,0,cw,ch);
+  gl.disable(gl.DEPTH_TEST); gl.depthMask(false);
+  gl.useProgram(pSky.p);
+  gl.uniform3fv(pSky.u.uF, F); gl.uniform3f(pSky.u.uR, Rv[0]*th*asp, Rv[1]*th*asp, Rv[2]*th*asp); gl.uniform3f(pSky.u.uU, Uv[0]*th, Uv[1]*th, Uv[2]*th);
+  gl.uniform2fv(pSky.u.uShift, shift); gl.uniform3fv(pSky.u.uSun, SUN); gl.uniform1f(pSky.u.uTime, t%100);
+  gl.drawArrays(gl.TRIANGLES,0,3);
+  gl.enable(gl.DEPTH_TEST); gl.depthMask(true); gl.clear(gl.DEPTH_BUFFER_BIT);
+  gl.useProgram(pTer.p); const u = pTer.u;
+  gl.uniform1i(u.uH, 0); gl.uniform1i(u.uB, 1); gl.uniform1i(u.uHi, 2); gl.uniform1i(u.uBH, 3);
+  gl.uniformMatrix4fv(u.uVP, false, VP); gl.uniform2fv(u.uShift, shift); gl.uniform3fv(u.uCam, eye); gl.uniform3fv(u.uSun, SUN);
+  gl.uniform1f(u.uExU, exU); gl.uniform1f(u.uEx, ex); gl.uniform1f(u.uTime, t%1000); gl.uniform1f(u.uRise, rz);
+  gl.uniform1f(u.uFog, lerp(1/(dist*5.2+700), 1/(dist*2.2+300), 1-rz));
+  const fine = dist < 1100, N = 512;
+  const ox = clamp(Math.round(s.x/4)*4 - N/2, 0, W-N), oz = clamp(Math.round(s.z/4)*4 - N/2, 0, H-N);
+  gl.uniform4f(u.uPatch, ox+N/2, oz+N/2, N/2, fine?1:0);
+  // подробный кусок: ближайший к цели камеры; подробности проявляются на подлёте и уходят при отлёте
+  let hp = null, hd = 1e9;
+  for(const q of HI){ if(!q.ready) continue; const d = Math.hypot(s.x-(q.ox+127.5), s.z-(q.oz+127.5)); if(d<hd){ hd = d; hp = q; } }
+  const hiK = hp ? (1-sstep(30,70,hd))*(1-sstep(420,700,dist))*rz : 0, hiOn = hiK > .002;
+  if(hiOn){ gl.activeTexture(gl.TEXTURE2); gl.bindTexture(gl.TEXTURE_2D, hp.texH); gl.activeTexture(gl.TEXTURE3); gl.bindTexture(gl.TEXTURE_2D, hp.texB); gl.uniform4f(u.uHiP, hp.ox-.375, hp.oz-.375, hiK, 0); }
+  gl.uniform1f(u.uHiOn, hiOn?1:0); gl.uniform1f(u.uDbg, window.DBG||0);
+  gl.uniform1i(u.uLvl, 0); gl.uniform1i(u.uS, 4); gl.uniform2i(u.uOrg, 0, 0);
+  gl.drawArraysInstanced(gl.TRIANGLE_STRIP, 0, 2*(W/4+1), H/4);
+  if(fine){ gl.uniform1i(u.uLvl, 1); gl.uniform1i(u.uS, 1); gl.uniform2i(u.uOrg, ox, oz); gl.drawArraysInstanced(gl.TRIANGLE_STRIP, 0, 2*(N+1), N); }
+  if(hiOn){ gl.uniform1i(u.uLvl, 2); gl.drawArraysInstanced(gl.TRIANGLE_STRIP, 0, 2*1024, 1023); }
+
+  // подписи поверх рельефа
+  const sw = stage.clientWidth, shh = stage.clientHeight;
+  const proj = (x,y,z)=>{ const w = VP[3]*x+VP[7]*y+VP[11]*z+VP[15]; if(w<=0) return null;
+    return [((VP[0]*x+VP[4]*y+VP[8]*z+VP[12])/w + shift[0])*.5*sw + sw/2, (1-((VP[1]*x+VP[5]*y+VP[9]*z+VP[13])/w + shift[1]))*.5*shh, w]; };
+  const overview = curMode!=='res';
+  pinsEl.style.setProperty('--mx', mxs.toFixed(3)); pinsEl.style.setProperty('--my', mys.toFixed(3));
+  const placed = [];
+  RES.map((r,i)=>({i, q:proj(r.x, r.h*exU, r.z)})).sort((a,b)=>(a.i===curAct?-1:b.i===curAct?1:0) || ((a.q?a.q[2]:1e9)-(b.q?b.q[2]:1e9))).forEach(({i,q})=>{ const el = pins[i];
+    if(!q || q[0]<-60 || q[0]>sw+60 || q[1]<-40 || q[1]>shh+120){ el.style.opacity = 0; return; }
+    el.style.opacity = (overview || i===curAct) ? 1 : clamp(1.3 - q[2]/1000, 0, 1);
+    el.style.transform = `translate3d(${q[0].toFixed(1)}px,${q[1].toFixed(1)}px,0)`;
+    const small = !!RES[i].sm, rr = i===curAct ? clamp(sw*(small ? .08 : .104), small ? 96 : 105, small ? 118 : 168) : 75;
+    const fits = d => { const cx = q[0]+(rr+12)*d[0], cy = q[1]+(rr+12)*d[1]; return cx-rr > 16 && cx+rr < sw-16 && cy-rr > 88 && cy+rr < shh-16; };
+    let di = pinDir[i]; if(di < 0 || !fits(DIRS[di])){ di = DIRS.findIndex(fits); if(di < 0) di = 0; }
+    if(di !== pinDir[i]){ pinDir[i] = di; el.style.setProperty('--ax', DIRS[di][0]); el.style.setProperty('--ay', DIRS[di][1]); el.classList.toggle('up', DIRS[di][1] < 0); }
+    const lw = lblW[i], x0 = q[0]-lw/2-5, x1 = q[0]+lw/2+5, y1 = q[1]-STEM[i]+2, y0 = y1-34;
+    const hit = placed.some(b=>x0<b[2] && x1>b[0] && y0<b[3] && y1>b[1]);
+    if(!hit) placed.push([x0,y0,x1,y1]);
+    if(hit !== el.classList.contains('hide')) el.classList.toggle('hide', hit); });
+  SEAS.forEach((sv,i)=>{ const q = proj(sv.x, sv.h*exU, sv.z), el = seas[i];
+    if(!q){ el.style.opacity = 0; return; } el.style.opacity = overview ? 1 : 0; el.style.transform = `translate3d(${q[0].toFixed(1)}px,${q[1].toFixed(1)}px,0)`; });
+  const q = proj(PEAK.x, PEAK.h*exU, PEAK.z); if(q) peakEl.style.transform = `translate3d(${q[0].toFixed(1)}px,${q[1].toFixed(1)}px,0)`;
+}
+
+function start(){
+  booted = true; riseT0 = performance.now() + 250; document.body.classList.add('ready'); intro.classList.remove('pre');
+  onScroll(); curMode = ''; setMode(modeAt(uGoal)); uCur = uGoal;
+  document.querySelectorAll('.kpi b').forEach((el,i)=>countUp(el, 900+150*i));
+  requestAnimationFrame(frame);
+  loadHi().catch(err=>console.warn('Подробный рельеф не загрузился:', err));
+}
+initGL().then(start).catch(err=>{
+  console.warn('Рельеф не запустился:', err); noGL = true; document.body.classList.add('nogl','ready'); $('noglBg').style.backgroundImage = 'url(img/hero-1.jpg)'; canvas.style.display = 'none'; pinsEl.style.display = 'none';
+  booted = true; intro.classList.remove('pre'); onScroll(); setMode(modeAt(uGoal));
+  (function loop(){ uCur += (uGoal-uCur)*.2; setMode(modeAt(uCur)); requestAnimationFrame(loop); })();
+});
+addEventListener('resize', ()=>{ if(isDesk() || Math.abs(innerWidth - (resize.w||0)) > 2){ resize.w = innerWidth; document.documentElement.style.setProperty('--vh0', innerHeight+'px'); } onScroll(); });
+resize.w = innerWidth;
+</script>
+</body>
+</html>
